@@ -10,6 +10,7 @@ var open: bool = false
 var fade_tween: Tween
 @export var fade_time: float = 0.2
 
+
 func _ready() -> void:
 	var a: ConfigHandler.AudioSettings = SaveSys.load_audio_settings()
 	music_slider.value = a.music_volume
@@ -30,7 +31,8 @@ func _disable_buttons() -> void:
 func open_menu() -> void:
 	_enable_buttons()
 	open = true
-	if fade_tween: fade_tween.kill()
+	if fade_tween:
+		fade_tween.kill()
 	get_tree().paused = true
 	show()
 	fade_tween = create_tween()
@@ -41,7 +43,8 @@ func open_menu() -> void:
 func close_menu() -> void:
 	_disable_buttons()
 	open = false
-	if fade_tween: fade_tween.kill()
+	if fade_tween:
+		fade_tween.kill()
 	get_tree().paused = false
 	fade_tween = create_tween()
 	fade_tween.tween_property(ui_root, "modulate", Color.TRANSPARENT, fade_time)
@@ -72,12 +75,15 @@ func _on_music_slider_value_changed(value: float) -> void:
 
 
 func _on_fullscreen_toggled(toggle: bool) -> void:
-	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN \
-		if toggle else DisplayServer.WINDOW_MODE_WINDOWED)
+	DisplayServer.window_set_mode(
+		DisplayServer.WINDOW_MODE_FULLSCREEN \
+		if toggle else DisplayServer.WINDOW_MODE_WINDOWED,
+	)
 	SaveSys.save_video_setting("fullscreen", toggle)
 
 
 func quit(source: AnimatedButton) -> void:
 	_disable_buttons()
 	source.disabled = true
-	source.burned.connect(get_tree().quit, CONNECT_ONE_SHOT)
+	source.burned.connect(SceneLoader.load_main_menu, CONNECT_ONE_SHOT)
+	close_menu()

@@ -29,7 +29,6 @@ Button/styles/pressed = SubResource("StyleBoxEmpty_l0v51")
 [node name="EscMenu" type="CanvasLayer" unique_id=2041106339 node_paths=PackedStringArray("buttons")]
 process_mode = 3
 layer = 999
-visible = false
 script = ExtResource("1_1apln")
 buttons = [NodePath("UIRoot/EscMenu/ButtonsVbox/BackButton"), NodePath("UIRoot/EscMenu/ButtonsVbox/ExitButton")]
 
@@ -201,7 +200,7 @@ size_flags_vertical = 4
 focus_neighbor_top = NodePath("../BackButton")
 focus_previous = NodePath("../BackButton")
 shortcut_in_tooltip = false
-label = "Exit"
+label = "Sair"
 
 [connection signal="toggled" from="UIRoot/EscMenu/ButtonsVbox/Fullscreen" to="." method="_on_fullscreen_toggled"]
 [connection signal="value_changed" from="UIRoot/EscMenu/ButtonsVbox/SoundsTextureRect/SoundsMargin/SoundsHBox/SoundsSlider" to="." method="_on_sounds_slider_value_changed"]

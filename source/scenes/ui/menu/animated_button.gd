@@ -66,6 +66,7 @@ func _pressed() -> void:
 	material = burn_material.duplicate()
 	_reset()
 	var tween: Tween = create_tween()
+	tween.tween_property(self, ^"disabled", true, 0.01)
 	tween.set_parallel(true)
 	tween.tween_method(func(x: float):
 		(material as ShaderMaterial).set_shader_parameter("burn_amount", x)

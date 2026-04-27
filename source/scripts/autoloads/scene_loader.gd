@@ -3,6 +3,7 @@ extends Node
 
 const LOADING_SCREEN: PackedScene = preload("uid://dossg3cl5gsqo")
 const LEVEL_1 = "uid://dbx0mdbod3dh8"
+const MAIN_MENU = "uid://dbdx47nsgglcq"
 
 signal progress_changed(progress: float)
 signal scene_loaded()
@@ -65,6 +66,10 @@ func load_last_paint_room() -> void:
 	_last_paint_room = SaveSys.load_last_level()
 	if _last_paint_room.is_empty(): _last_paint_room = LEVEL_1
 	load_scene(_last_paint_room)
+
+
+func load_main_menu() -> void:
+	load_scene(MAIN_MENU)
 
 
 func start_load(_scene_path: String):
