@@ -73,3 +73,5 @@ func _pressed() -> void:
 		, 0.0, 1.0, 1.0)
 	tween.tween_property(self, "modulate", Color.TRANSPARENT, 1.0)
 	tween.finished.connect(burned.emit)
+	tween.set_parallel(false)
+	tween.tween_property(self, ^"disabled", false, 0.01)

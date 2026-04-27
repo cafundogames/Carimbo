@@ -31,7 +31,7 @@ func stamp(image: Texture2D, size: Vector2 = Vector2(1.0, 1.0)) -> void:
 	var r = vp_size/4.0
 	var pos_offset = Vector2(randi_range(-r.x, r.x), randi_range(-r.y, r.y))
 	var rot = deg_to_rad(randf_range(-50.0, 50.0))
-	
+
 	var pos = vp_size/2.0 + pos_offset
 	stamp_offset(image, pos, size, rot)
 
@@ -100,10 +100,8 @@ func _update_shader_anim() -> void:
 ## Executa o efeito de burn
 func trigger_burn_fx(sound: bool = true, burn_time: float = 1.0) -> void:
 	if sound and audio_player:
-		if audio_player.get_parent() == self:
-			audio_player.reparent(get_tree().current_scene)
-			audio_player.global_position = global_position
-			audio_player.finished.connect(audio_player.queue_free)
+		audio_player.reparent(get_tree().current_scene)
+		audio_player.finished.connect(audio_player.queue_free)
 		audio_player.play()
 	var particles: GPUParticles3D = Consts.PARTICLE_SPARK.instantiate()
 	particles.emitting = true
