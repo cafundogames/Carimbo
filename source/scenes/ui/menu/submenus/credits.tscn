@@ -14,12 +14,13 @@ action = &"ui_close_dialog"
 [sub_resource type="Shortcut" id="Shortcut_atpp1"]
 events = [SubResource("InputEventAction_3ihr0"), SubResource("InputEventAction_kgwso")]
 
-[node name="CreditsMenu" type="VBoxContainer" unique_id=1861023147]
+[node name="CreditsMenu" type="VBoxContainer" unique_id=1861023147 node_paths=PackedStringArray("buttons")]
 offset_right = 387.0
 offset_bottom = 608.0
 size_flags_horizontal = 3
 theme = ExtResource("1_3ihr0")
 script = ExtResource("2_3ihr0")
+buttons = [NodePath("BackButton")]
 metadata/_custom_type_script = "uid://cs262fdhaiudl"
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1615845115]
@@ -52,6 +53,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 shortcut = SubResource("Shortcut_atpp1")
+shortcut_in_tooltip = false
 label = "Voltar"
 
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed" flags=18]

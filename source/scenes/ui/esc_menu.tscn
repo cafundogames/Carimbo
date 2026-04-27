@@ -26,11 +26,12 @@ Button/styles/hover = SubResource("StyleBoxEmpty_sfjrn")
 Button/styles/normal = SubResource("StyleBoxEmpty_1y3t0")
 Button/styles/pressed = SubResource("StyleBoxEmpty_l0v51")
 
-[node name="EscMenu" type="CanvasLayer" unique_id=2041106339]
+[node name="EscMenu" type="CanvasLayer" unique_id=2041106339 node_paths=PackedStringArray("buttons")]
 process_mode = 3
 layer = 999
 visible = false
 script = ExtResource("1_1apln")
+buttons = [NodePath("UIRoot/EscMenu/ButtonsVbox/BackButton"), NodePath("UIRoot/EscMenu/ButtonsVbox/ExitButton")]
 
 [node name="UIRoot" type="Control" parent="." unique_id=2048664900]
 unique_name_in_owner = true
@@ -187,6 +188,7 @@ focus_neighbor_top = NodePath("../MusicTextureRect/MusicMargin/MusicHBox/MusicSl
 focus_neighbor_bottom = NodePath("../ExitButton")
 focus_next = NodePath("../ExitButton")
 focus_previous = NodePath("../MusicTextureRect/MusicMargin/MusicHBox/MusicSlider")
+shortcut_in_tooltip = false
 label = "Voltar"
 burn_on_press = false
 
@@ -198,6 +200,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 focus_neighbor_top = NodePath("../BackButton")
 focus_previous = NodePath("../BackButton")
+shortcut_in_tooltip = false
 label = "Exit"
 
 [connection signal="toggled" from="UIRoot/EscMenu/ButtonsVbox/Fullscreen" to="." method="_on_fullscreen_toggled"]

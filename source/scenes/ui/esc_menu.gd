@@ -4,6 +4,7 @@ extends CanvasLayer
 @onready var music_slider: HSlider = %MusicSlider
 @onready var sounds_slider: HSlider = %SoundsSlider
 @onready var fullscreen: CheckBox = %Fullscreen
+@export var buttons: Array[Button]
 
 var open: bool = false
 var fade_tween: Tween
@@ -16,7 +17,18 @@ func _ready() -> void:
 	fullscreen.set_pressed(SaveSys.load_video_settings().fullscreen)
 
 
+func _enable_buttons() -> void:
+	for button: Button in buttons:
+		button.disabled = false
+
+
+func _disable_buttons() -> void:
+	for button: Button in buttons:
+		button.disabled = true
+
+
 func open_menu() -> void:
+	_enable_buttons()
 	open = true
 	if fade_tween: fade_tween.kill()
 	get_tree().paused = true
@@ -27,6 +39,7 @@ func open_menu() -> void:
 
 
 func close_menu() -> void:
+	_disable_buttons()
 	open = false
 	if fade_tween: fade_tween.kill()
 	get_tree().paused = false
@@ -65,4 +78,6 @@ func _on_fullscreen_toggled(toggle: bool) -> void:
 
 
 func quit(source: AnimatedButton) -> void:
+	_disable_buttons()
+	source.disabled = true
 	source.burned.connect(get_tree().quit, CONNECT_ONE_SHOT)

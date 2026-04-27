@@ -15,6 +15,7 @@ func _ready() -> void:
 
 
 func _on_back_button_pressed(source: AnimatedButton) -> void:
+	_disable_buttons()
 	source.burned.connect(change_menu.emit.bind(Consts.MENUS["main"]), CONNECT_ONE_SHOT)
 
 

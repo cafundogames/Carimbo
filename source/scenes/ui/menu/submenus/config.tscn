@@ -34,12 +34,13 @@ action = &"ui_close_dialog"
 [sub_resource type="Shortcut" id="Shortcut_k0wdl"]
 events = [SubResource("InputEventAction_ol3wh"), SubResource("InputEventAction_l0v51")]
 
-[node name="ConfigMenu" type="VBoxContainer" unique_id=1861023147]
+[node name="ConfigMenu" type="VBoxContainer" unique_id=1861023147 node_paths=PackedStringArray("buttons")]
 offset_right = 387.0
 offset_bottom = 608.0
 size_flags_horizontal = 3
 theme = ExtResource("1_l5i8q")
 script = ExtResource("2_nc3es")
+buttons = [NodePath("ButtonsVbox/BackButton")]
 metadata/_custom_type_script = "uid://cs262fdhaiudl"
 
 [node name="ButtonsVbox" type="VBoxContainer" parent="." unique_id=540358293]
@@ -163,6 +164,7 @@ focus_neighbor_bottom = NodePath("../Fullscreen")
 focus_next = NodePath("../Fullscreen")
 focus_previous = NodePath("../MusicTextureRect/MusicMargin/MusicHBox/MusicSlider")
 shortcut = SubResource("Shortcut_k0wdl")
+shortcut_in_tooltip = false
 label = "Voltar"
 
 [connection signal="value_changed" from="ButtonsVbox/SoundsTextureRect/SoundsMargin/SoundsHBox/SoundsSlider" to="." method="_on_sounds_slider_value_changed"]
