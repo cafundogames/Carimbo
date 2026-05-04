@@ -18,6 +18,11 @@
 [ext_resource type="Script" uid="uid://bmgcj6fweob2m" path="res://scripts/combat/area/hurtbox_3d.gd" id="15_70kwc"]
 [ext_resource type="Script" uid="uid://dganhrqw3fv7u" path="res://scripts/combat/health_data.gd" id="16_pcd0u"]
 [ext_resource type="Script" uid="uid://bqiq8knpd7yk2" path="res://scripts/combat/shield_data.gd" id="17_w3p2j"]
+[ext_resource type="Script" uid="uid://bs3p43e2utth0" path="res://scenes/entities/player/player_state_machine/states/idle_state.gd" id="19_knby6"]
+[ext_resource type="Script" uid="uid://dfflnbbsvj0jc" path="res://scenes/entities/player/player_state_machine/states/walk_state.gd" id="20_18p7g"]
+[ext_resource type="Script" uid="uid://c8ukgaej5g33g" path="res://scenes/entities/player/player_state_machine/states/dead_state.gd" id="21_fg2wu"]
+[ext_resource type="Script" uid="uid://cbjitg71due4f" path="res://scenes/entities/player/player_state_machine/states/roll_state.gd" id="22_7dqom"]
+[ext_resource type="Script" uid="uid://bkg6lot0o3k5w" path="res://scenes/entities/player/player_state_machine/states/hit_state.gd" id="23_go8vc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yywfu"]
 radius = 0.3
@@ -587,7 +592,7 @@ animations = [{
 [sub_resource type="SphereShape3D" id="SphereShape3D_r4dfn"]
 radius = 0.6
 
-[node name="Player" type="CharacterBody3D" unique_id=237217294 node_paths=PackedStringArray("stampable_sprite")]
+[node name="Player" type="CharacterBody3D" unique_id=237217294 node_paths=PackedStringArray("stampable_sprite", "state_idle", "state_walk", "state_dead", "state_roll", "state_hit")]
 collision_layer = 8
 script = ExtResource("1_w3p2j")
 stampable_sprite = NodePath("ShadedAnimatedSprite3D")
@@ -599,6 +604,11 @@ animation_roll = &"roll"
 animation_attk = &"attack"
 animation_idle = &"idle"
 animation_walk = &"walk"
+state_idle = NodePath("States/PlayerIdleState")
+state_walk = NodePath("States/PlayerWalkState")
+state_dead = NodePath("States/PlayerDeadState")
+state_roll = NodePath("States/PlayerRollState")
+state_hit = NodePath("States/PlayerHitState")
 metadata/_custom_type_script = "uid://c7u4g2ppur0xh"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1221538406]
@@ -623,18 +633,9 @@ size = Vector2i(270, 270)
 render_target_clear_mode = 2
 render_target_update_mode = 1
 
-[node name="Splat" type="AudioStreamPlayer" parent="." unique_id=1276013215]
-stream = ExtResource("13_fg2wu")
-bus = &"Sounds"
-
-[node name="PlayerDamage1" type="AudioStreamPlayer" parent="." unique_id=1539202400]
-stream = ExtResource("14_7dqom")
-bus = &"Sounds"
-
 [node name="Hurtbox3D" type="Area3D" parent="." unique_id=769131646 node_paths=PackedStringArray("actor")]
 collision_layer = 0
 collision_mask = 4
-monitorable = false
 script = ExtResource("15_70kwc")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://bmgcj6fweob2m"
@@ -645,10 +646,50 @@ shape = SubResource("SphereShape3D_r4dfn")
 
 [node name="HealthData" type="Node" parent="." unique_id=1085796472]
 script = ExtResource("16_pcd0u")
+initial_health = 10.0
 metadata/_custom_type_script = "uid://dganhrqw3fv7u"
 
 [node name="ShieldData" type="Node" parent="." unique_id=1861260174]
 script = ExtResource("17_w3p2j")
 metadata/_custom_type_script = "uid://bqiq8knpd7yk2"
 
+[node name="States" type="Node" parent="." unique_id=347798070]
+
+[node name="PlayerIdleState" type="Node" parent="States" unique_id=827382039]
+script = ExtResource("19_knby6")
+metadata/_custom_type_script = "uid://bs3p43e2utth0"
+
+[node name="PlayerWalkState" type="Node" parent="States" unique_id=1410906132]
+script = ExtResource("20_18p7g")
+metadata/_custom_type_script = "uid://dfflnbbsvj0jc"
+
+[node name="PlayerDeadState" type="Node" parent="States" unique_id=1926173961 node_paths=PackedStringArray("stream_player")]
+script = ExtResource("21_fg2wu")
+death_sound = ExtResource("13_fg2wu")
+stream_player = NodePath("DeathSound")
+metadata/_custom_type_script = "uid://c8ukgaej5g33g"
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="States/PlayerDeadState" unique_id=1276013215]
+stream = ExtResource("13_fg2wu")
+bus = &"Sounds"
+
+[node name="PlayerRollState" type="Node" parent="States" unique_id=1793865176 node_paths=PackedStringArray("hurtbox")]
+script = ExtResource("22_7dqom")
+hurtbox = NodePath("../../Hurtbox3D")
+metadata/_custom_type_script = "uid://cbjitg71due4f"
+
+[node name="PlayerHitState" type="Node" parent="States" unique_id=1895856580 node_paths=PackedStringArray("stream_player")]
+script = ExtResource("23_go8vc")
+hit_sound = ExtResource("14_7dqom")
+stream_player = NodePath("DamageSound")
+metadata/_custom_type_script = "uid://bkg6lot0o3k5w"
+
+[node name="DamageSound" type="AudioStreamPlayer" parent="States/PlayerHitState" unique_id=1539202400]
+stream = ExtResource("14_7dqom")
+volume_db = 0.2
+bus = &"Sounds"
+
+[connection signal="success_hit" from="Hurtbox3D" to="ShieldData" method="_on_hurtbox_success_hit"]
+[connection signal="dead" from="HealthData" to="." method="_on_health_data_dead"]
+[connection signal="success_hit" from="HealthData" to="." method="_on_health_data_success_hit"]
 [connection signal="success_hit" from="ShieldData" to="HealthData" method="on_success_hit"]

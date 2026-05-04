@@ -6,7 +6,7 @@ signal success_hit(attack_info: AttackData)
 
 @export var actor: Node = self.owner
 
-var active_modifiers: Array[AttackData.Modifier]
+var active_modifiers: Array[Modifier]
 
 
 func _ready() -> void:
@@ -20,8 +20,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if active_modifiers.is_empty():
 		return
-	for mod: AttackData.Modifier in active_modifiers:
-		mod.process(delta)
+	for mod: Modifier in active_modifiers:
+		var finished = mod.process(delta)
+		if finished:
+			active_modifiers.erase.call_deferred(mod)
 
 
 func emit_success_hit(attack_info: AttackData) -> void:
@@ -32,6 +34,6 @@ func _on_area_entered(area: Area3D) -> void:
 	if area is not Hitbox3D:
 		return
 	var box: Hitbox3D = area # casting for better lsp and linting
-	for mod: AttackData.Modifier in box.attack_info.mods:
+	for mod: Modifier in box.attack_info.mods:
 		mod.apply(self)
 	success_hit.emit(box.attack_info)

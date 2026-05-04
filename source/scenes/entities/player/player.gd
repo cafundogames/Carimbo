@@ -7,6 +7,7 @@ extends CharacterBody3D
 		stampable_sprite = v
 		notify_property_list_changed()
 @export var movement_speed: float = 10.0
+@export var death_on_y: float = -20.0
 @export_group("Animations", "animation_")
 @export var animation_death_start: StringName
 @export var animation_death_loop: StringName
@@ -23,33 +24,26 @@ extends CharacterBody3D
 @export var state_roll: PlayerState
 @export var state_hit: PlayerState
 
-var input_dir: Vector2
+var input_dir: Vector2 = Vector2.RIGHT
 var _current_state: PlayerState
 
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
 	change_state(state_idle)
 
 
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-
 	if _current_state:
 		_current_state.handle_physics_process(delta)
-
+	if not is_on_floor() and _current_state is not PlayerRollState:
+		velocity += get_gravity() * delta
 	move_and_slide()
-
-	if not input_dir.is_zero_approx() and stampable_sprite:
-		stampable_sprite.set_flip_h(signf(input_dir.x) < 0)
-
-	# velocity = Vector3(
-	# 	_input_dir.x,
-	# 	0.0,
-	# 	_input_dir.y,
-	# ) * movement_speed
+	if not is_zero_approx(input_dir.x) and stampable_sprite:
+		stampable_sprite.set_flip_h(input_dir.x < 0)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -57,21 +51,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if _current_state:
 		_current_state.handle_input(event)
-
-	var is_move: bool = (
-		event.is_action(&"move_left") or
-		event.is_action(&"move_right") or
-		event.is_action(&"move_fowards") or
-		event.is_action(&"move_backwards")
-	)
-	if is_move:
-		input_dir = Input.get_vector(
-			&"move_left",
-			&"move_right",
-			&"move_fowards",
-			&"move_backwards",
-		)
-		get_viewport().set_input_as_handled()
 
 
 func _validate_property(property: Dictionary) -> void:
@@ -86,6 +65,8 @@ func _validate_property(property: Dictionary) -> void:
 
 func change_state(new_state: PlayerState) -> void:
 	var old_state: PlayerState = _current_state
+	if old_state == new_state:
+		return
 	if _current_state:
 		_current_state.exit_state()
 	_current_state = new_state
@@ -94,3 +75,12 @@ func change_state(new_state: PlayerState) -> void:
 		_current_state = old_state
 		return
 	_current_state.enter_state(self)
+
+
+func _on_health_data_dead() -> void:
+	change_state(state_dead)
+
+
+func _on_health_data_success_hit(attack_info: AttackData) -> void:
+	change_state(state_hit)
+	stampable_sprite.stamp(attack_info.stamp_texture, attack_info.stamp_size)

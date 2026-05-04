@@ -14,7 +14,6 @@ func emit_success_hit(attack_info: AttackData) -> void:
 
 
 func _on_hurtbox_success_hit(attack_info: AttackData) -> void:
+	shield = maxf(shield - attack_info.shield_dmg, 0.0)
 	if is_zero_approx(self.shield):
 		emit_success_hit(attack_info)
-		return
-	shield -= attack_info.shield_dmg
