@@ -19,7 +19,5 @@ func handle_physics_process(_delta: float) -> void:
 		&"move_backwards",
 	).is_zero_approx():
 		player.change_state(player.state_walk)
-		get_viewport().set_input_as_handled()
 	if Input.is_action_pressed(&"roll"):
 		player.change_state(player.state_roll)
-		get_viewport().set_input_as_handled()

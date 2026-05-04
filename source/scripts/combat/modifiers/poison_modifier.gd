@@ -6,6 +6,8 @@ const _POISON_STAMP_TEXTURE: Texture2D = preload("uid://dttvady2su02o")
 
 ## How much time the poison will last in seconds
 @export var duration: float = 10.0
+## How much damage should the poison cause
+@export var poison_damage: float = 0.5
 
 var _time_left: float
 var _loop_time: float = 0.0
@@ -38,10 +40,10 @@ func process(delta: float) -> bool:
 
 	if _loop_time <= 0.0:
 		var attk: AttackData = AttackData.new()
-		attk.attack_dmg = 2.0
-		attk.shield_dmg = 2.0
+		attk.attack_dmg = poison_damage
+		attk.shield_dmg = poison_damage
 		attk.stamp_texture = _POISON_STAMP_TEXTURE
-		attk.stamp_size = Vector2.ONE * 0.3
+		attk.stamp_size = Vector2.ONE * 0.2
 		self.hurtbox.emit_success_hit(attk)
 
 	return _time_left <= 0.0

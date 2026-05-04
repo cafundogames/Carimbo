@@ -3,9 +3,10 @@ class_name ShadedAnimatedSprite3D
 extends AnimatedSprite3D
 
 const SHADER_STAMPABLE_SPRITE: ShaderMaterial = preload("uid://brb72iyoqsyk6")
+const BURN_SFX = preload("uid://dfe4v2sdvd1bd")
 
 signal burned
-@export var audio_player: AudioStreamPlayer3D
+@export var audio_player: AudioStreamPlayer
 
 @export var stamp_viewport: SubViewport:
 	set(v): stamp_viewport = v; _update_viewport_size(); update_configuration_warnings()
@@ -17,6 +18,9 @@ func _init() -> void:
 
 
 func _ready() -> void:
+	if not audio_player:
+		audio_player = AudioStreamPlayer.new()
+		add_child(audio_player)
 	frame_changed.connect(_update_shader_anim)
 	animation_changed.connect(_update_shader_anim)
 	_update_viewport_size()
@@ -101,12 +105,14 @@ func _update_shader_anim() -> void:
 func trigger_burn_fx(sound: bool = true, burn_time: float = 1.0) -> void:
 	if sound and audio_player:
 		audio_player.reparent(get_tree().current_scene)
-		audio_player.finished.connect(audio_player.queue_free)
+		audio_player.stream = BURN_SFX
+		audio_player.finished.connect(audio_player.queue_free, CONNECT_ONE_SHOT)
 		audio_player.play()
 	var particles: GPUParticles3D = Consts.PARTICLE_SPARK.instantiate()
-	particles.emitting = true
 	get_tree().current_scene.add_child(particles)
 	particles.global_position = global_position
+	if not particles.finished.is_connected(particles.queue_free):
+		particles.finished.connect(particles.queue_free, CONNECT_ONE_SHOT)
 	particles.emitting = true
 
 	var burn_tween: Tween = create_tween()
@@ -125,3 +131,8 @@ func _get_configuration_warnings() -> PackedStringArray:
 	if not stamp_viewport:
 		war.append("Select a SubViewport node for the stamp effect")
 	return war
+
+
+func clear_viewport() -> void:
+	stamp_viewport.render_target_clear_mode = SubViewport.CLEAR_MODE_ONCE
+	stamp_viewport.render_target_update_mode = SubViewport.UPDATE_ONCE

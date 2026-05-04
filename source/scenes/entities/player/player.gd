@@ -84,3 +84,12 @@ func _on_health_data_dead() -> void:
 func _on_health_data_success_hit(attack_info: AttackData) -> void:
 	change_state(state_hit)
 	stampable_sprite.stamp(attack_info.stamp_texture, attack_info.stamp_size)
+
+
+func _on_health_data_success_heal(amount: float) -> void:
+	stampable_sprite.clear_viewport()
+	print("healed %d points" % amount)
+
+
+func _on_animated_sprite_burned() -> void:
+	pass # Do the return to last checkpoint thing

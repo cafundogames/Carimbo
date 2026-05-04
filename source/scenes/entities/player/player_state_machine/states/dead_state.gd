@@ -19,4 +19,7 @@ func enter_state(player_node: PlayerCharacterBody3D) -> void:
 	stream_player.play()
 	player.stampable_sprite.play(player.animation_death_start)
 	await player.stampable_sprite.animation_finished
+	player.stampable_sprite.clear_viewport()
 	player.stampable_sprite.play(player.animation_death_loop)
+	await player.stampable_sprite.animation_looped
+	player.stampable_sprite.trigger_burn_fx()

@@ -27,9 +27,9 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yywfu"]
 radius = 0.3
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bedty"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_80i3n"]
 atlas = ExtResource("6_70kwc")
-region = Rect2(0, 0, 256, 256)
+region = Rect2(2304, 0, 256, 256)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_r4dfn"]
 viewport_path = NodePath("ShadedAnimatedSprite3D/SubViewport")
@@ -44,7 +44,7 @@ shader_parameter/specular = 0.249999994412
 shader_parameter/texture_normal = ExtResource("3_bj7e2")
 shader_parameter/normal_scale = 1.5600008340999985
 shader_parameter/albedo = Color(1, 1, 1, 1)
-shader_parameter/texture_albedo = SubResource("AtlasTexture_bedty")
+shader_parameter/texture_albedo = SubResource("AtlasTexture_80i3n")
 shader_parameter/texture_carimbo = SubResource("ViewportTexture_r4dfn")
 shader_parameter/carimbo_glow_intensity = 0.0
 shader_parameter/burn_texture = ExtResource("2_8akj5")
@@ -53,7 +53,7 @@ shader_parameter/burn_size = 0.150000007125
 shader_parameter/burn_smoothness = 0.1330000063175
 shader_parameter/burn_glow_color = Color(1, 0.32, 0, 1)
 shader_parameter/burn_glow_intensity = 10.0
-shader_parameter/region_rect = Vector4(0, 0, 0.1, 1)
+shader_parameter/region_rect = Vector4(0.9, 0, 0.1, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yylnd"]
 atlas = ExtResource("3_r4dfn")
@@ -102,10 +102,6 @@ region = Rect2(2700, 0, 270, 270)
 [sub_resource type="AtlasTexture" id="AtlasTexture_jb5de"]
 atlas = ExtResource("3_r4dfn")
 region = Rect2(2970, 0, 270, 270)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_80i3n"]
-atlas = ExtResource("6_70kwc")
-region = Rect2(2304, 0, 256, 256)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bja0e"]
 atlas = ExtResource("7_yywfu")
@@ -202,6 +198,10 @@ region = Rect2(5632, 0, 256, 256)
 [sub_resource type="AtlasTexture" id="AtlasTexture_42rjs"]
 atlas = ExtResource("7_yywfu")
 region = Rect2(5888, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bedty"]
+atlas = ExtResource("6_70kwc")
+region = Rect2(0, 0, 256, 256)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oucov"]
 atlas = ExtResource("6_70kwc")
@@ -376,51 +376,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_igo70")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_aavis")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_iddxe")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3jckt")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_d8m7s")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ya70i")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mmxje")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_uw0cq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_h5ugs")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5sbaw")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_upwrt")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mhxre")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_e4d22")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_iglbh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_nn0uk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_42rjs")
 }],
 "loop": false,
 "name": &"death",
@@ -620,7 +575,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 material_override = SubResource("ShaderMaterial_ovg4i")
 billboard = 1
 sprite_frames = SubResource("SpriteFrames_go8vc")
-animation = &"idle"
+animation = &"death"
 autoplay = "idle"
 script = ExtResource("5_5sj0x")
 stamp_viewport = NodePath("SubViewport")
@@ -646,6 +601,7 @@ shape = SubResource("SphereShape3D_r4dfn")
 
 [node name="HealthData" type="Node" parent="." unique_id=1085796472]
 script = ExtResource("16_pcd0u")
+debug_enable = true
 initial_health = 10.0
 metadata/_custom_type_script = "uid://dganhrqw3fv7u"
 
@@ -689,7 +645,9 @@ stream = ExtResource("14_7dqom")
 volume_db = 0.2
 bus = &"Sounds"
 
+[connection signal="burned" from="ShadedAnimatedSprite3D" to="." method="_on_animated_sprite_burned"]
 [connection signal="success_hit" from="Hurtbox3D" to="ShieldData" method="_on_hurtbox_success_hit"]
 [connection signal="dead" from="HealthData" to="." method="_on_health_data_dead"]
+[connection signal="success_heal" from="HealthData" to="." method="_on_health_data_success_heal"]
 [connection signal="success_hit" from="HealthData" to="." method="_on_health_data_success_hit"]
 [connection signal="success_hit" from="ShieldData" to="HealthData" method="on_success_hit"]
