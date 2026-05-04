@@ -41,3 +41,4 @@ Classificação indicativa: 12 anos
 - [Beehave](https://bitbra.in/beehave/) MIT License
 - [DialogueManager](https://github.com/nathanhoad/godot_dialogue_manager?tab=readme-ov-file) MIT License
 - [PhantomCamera](https://github.com/ramokz/phantom-camera) MIT License
+- [Scene Manager](https://github.com/glass-brick/Scene-Manager) MIT License

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dem5ecgo3ey5q"]
 
 [ext_resource type="Shader" uid="uid://dl6ampid6rth6" path="res://scenes/components/stamped_animated_sprite/shaded_animated_sprite_3d.gdshader" id="1_bjvvg"]
+[ext_resource type="Script" uid="uid://c7u4g2ppur0xh" path="res://scenes/entities/player/player.gd" id="1_w3p2j"]
 [ext_resource type="Texture2D" uid="uid://ch1fj0j2vc2r1" path="res://resources/burn_noise_texture.tres" id="2_8akj5"]
 [ext_resource type="Texture2D" uid="uid://o34vnik8cwo4" path="res://assets/textures/paper/Paper003_1K-JPG_NormalGL.jpg" id="3_bj7e2"]
 [ext_resource type="Texture2D" uid="uid://dqyykf3mww3uv" path="res://assets/textures/player/attack.png" id="3_r4dfn"]
@@ -14,13 +15,16 @@
 [ext_resource type="Texture2D" uid="uid://faqurs64mnnm" path="res://assets/textures/player/run.png" id="11_18p7g"]
 [ext_resource type="AudioStream" uid="uid://bwntiisikjlh7" path="res://assets/sounds/splat.mp3" id="13_fg2wu"]
 [ext_resource type="AudioStream" uid="uid://ppyanksqqout" path="res://assets/sounds/player_damage1.mp3" id="14_7dqom"]
+[ext_resource type="Script" uid="uid://bmgcj6fweob2m" path="res://scripts/combat/area/hurtbox_3d.gd" id="15_70kwc"]
+[ext_resource type="Script" uid="uid://dganhrqw3fv7u" path="res://scripts/combat/health_data.gd" id="16_pcd0u"]
+[ext_resource type="Script" uid="uid://bqiq8knpd7yk2" path="res://scripts/combat/shield_data.gd" id="17_w3p2j"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_r4dfn"]
-radius = 0.7
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yywfu"]
+radius = 0.3
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_cfbnc"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_bedty"]
 atlas = ExtResource("6_70kwc")
-region = Rect2(2304, 0, 256, 256)
+region = Rect2(0, 0, 256, 256)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_r4dfn"]
 viewport_path = NodePath("ShadedAnimatedSprite3D/SubViewport")
@@ -35,7 +39,7 @@ shader_parameter/specular = 0.249999994412
 shader_parameter/texture_normal = ExtResource("3_bj7e2")
 shader_parameter/normal_scale = 1.5600008340999985
 shader_parameter/albedo = Color(1, 1, 1, 1)
-shader_parameter/texture_albedo = SubResource("AtlasTexture_cfbnc")
+shader_parameter/texture_albedo = SubResource("AtlasTexture_bedty")
 shader_parameter/texture_carimbo = SubResource("ViewportTexture_r4dfn")
 shader_parameter/carimbo_glow_intensity = 0.0
 shader_parameter/burn_texture = ExtResource("2_8akj5")
@@ -44,7 +48,7 @@ shader_parameter/burn_size = 0.150000007125
 shader_parameter/burn_smoothness = 0.1330000063175
 shader_parameter/burn_glow_color = Color(1, 0.32, 0, 1)
 shader_parameter/burn_glow_intensity = 10.0
-shader_parameter/region_rect = Vector4(0.9, 0, 0.1, 1)
+shader_parameter/region_rect = Vector4(0, 0, 0.1, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yylnd"]
 atlas = ExtResource("3_r4dfn")
@@ -194,10 +198,6 @@ region = Rect2(5632, 0, 256, 256)
 atlas = ExtResource("7_yywfu")
 region = Rect2(5888, 0, 256, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bedty"]
-atlas = ExtResource("6_70kwc")
-region = Rect2(0, 0, 256, 256)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_oucov"]
 atlas = ExtResource("6_70kwc")
 region = Rect2(256, 0, 256, 256)
@@ -229,6 +229,10 @@ region = Rect2(1792, 0, 256, 256)
 [sub_resource type="AtlasTexture" id="AtlasTexture_a6gqt"]
 atlas = ExtResource("6_70kwc")
 region = Rect2(2048, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cfbnc"]
+atlas = ExtResource("6_70kwc")
+region = Rect2(2304, 0, 256, 256)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mwjm0"]
 atlas = ExtResource("10_knby6")
@@ -580,12 +584,26 @@ animations = [{
 "speed": 12.0
 }]
 
-[node name="Player" type="CharacterBody3D" unique_id=1439993116]
-collision_layer = 8
+[sub_resource type="SphereShape3D" id="SphereShape3D_r4dfn"]
+radius = 0.6
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1748917751]
+[node name="Player" type="CharacterBody3D" unique_id=237217294 node_paths=PackedStringArray("stampable_sprite")]
+collision_layer = 8
+script = ExtResource("1_w3p2j")
+stampable_sprite = NodePath("ShadedAnimatedSprite3D")
+animation_death_start = &"death"
+animation_death_loop = &"death_2"
+animation_hit = &"hit"
+animation_fire = &"fire"
+animation_roll = &"roll"
+animation_attk = &"attack"
+animation_idle = &"idle"
+animation_walk = &"walk"
+metadata/_custom_type_script = "uid://c7u4g2ppur0xh"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1221538406]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("SphereShape3D_r4dfn")
+shape = SubResource("CapsuleShape3D_yywfu")
 
 [node name="ShadedAnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=828992761 node_paths=PackedStringArray("stamp_viewport")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -594,7 +612,6 @@ billboard = 1
 sprite_frames = SubResource("SpriteFrames_go8vc")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.8431596
 script = ExtResource("5_5sj0x")
 stamp_viewport = NodePath("SubViewport")
 metadata/_custom_type_script = "uid://ctmgj3s2w7dsb"
@@ -613,3 +630,25 @@ bus = &"Sounds"
 [node name="PlayerDamage1" type="AudioStreamPlayer" parent="." unique_id=1539202400]
 stream = ExtResource("14_7dqom")
 bus = &"Sounds"
+
+[node name="Hurtbox3D" type="Area3D" parent="." unique_id=769131646 node_paths=PackedStringArray("actor")]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+script = ExtResource("15_70kwc")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://bmgcj6fweob2m"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox3D" unique_id=1748917751]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("SphereShape3D_r4dfn")
+
+[node name="HealthData" type="Node" parent="." unique_id=1085796472]
+script = ExtResource("16_pcd0u")
+metadata/_custom_type_script = "uid://dganhrqw3fv7u"
+
+[node name="ShieldData" type="Node" parent="." unique_id=1861260174]
+script = ExtResource("17_w3p2j")
+metadata/_custom_type_script = "uid://bqiq8knpd7yk2"
+
+[connection signal="success_hit" from="ShieldData" to="HealthData" method="on_success_hit"]

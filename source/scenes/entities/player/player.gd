@@ -1,0 +1,96 @@
+@tool
+class_name PlayerCharacterBody3D
+extends CharacterBody3D
+
+@export var stampable_sprite: ShadedAnimatedSprite3D:
+	set(v):
+		stampable_sprite = v
+		notify_property_list_changed()
+@export var movement_speed: float = 10.0
+@export_group("Animations", "animation_")
+@export var animation_death_start: StringName
+@export var animation_death_loop: StringName
+@export var animation_hit: StringName
+@export var animation_fire: StringName
+@export var animation_roll: StringName
+@export var animation_attk: StringName
+@export var animation_idle: StringName
+@export var animation_walk: StringName
+@export_group("States", "state_")
+@export var state_idle: PlayerState
+@export var state_walk: PlayerState
+@export var state_dead: PlayerState
+@export var state_roll: PlayerState
+@export var state_hit: PlayerState
+
+var input_dir: Vector2
+var _current_state: PlayerState
+
+
+func _ready() -> void:
+	change_state(state_idle)
+
+
+func _physics_process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		return
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+
+	if _current_state:
+		_current_state.handle_physics_process(delta)
+
+	move_and_slide()
+
+	if not input_dir.is_zero_approx() and stampable_sprite:
+		stampable_sprite.set_flip_h(signf(input_dir.x) < 0)
+
+	# velocity = Vector3(
+	# 	_input_dir.x,
+	# 	0.0,
+	# 	_input_dir.y,
+	# ) * movement_speed
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if Engine.is_editor_hint():
+		return
+	if _current_state:
+		_current_state.handle_input(event)
+
+	var is_move: bool = (
+		event.is_action(&"move_left") or
+		event.is_action(&"move_right") or
+		event.is_action(&"move_fowards") or
+		event.is_action(&"move_backwards")
+	)
+	if is_move:
+		input_dir = Input.get_vector(
+			&"move_left",
+			&"move_right",
+			&"move_fowards",
+			&"move_backwards",
+		)
+		get_viewport().set_input_as_handled()
+
+
+func _validate_property(property: Dictionary) -> void:
+	if (property.name as String).begins_with("animation_"):
+		var suggestions: PackedStringArray = (
+			stampable_sprite.sprite_frames.get_animation_names()
+			if stampable_sprite else PackedStringArray()
+		)
+		property.hint = PROPERTY_HINT_ENUM_SUGGESTION
+		property.hint_string = ",".join(suggestions)
+
+
+func change_state(new_state: PlayerState) -> void:
+	var old_state: PlayerState = _current_state
+	if _current_state:
+		_current_state.exit_state()
+	_current_state = new_state
+	if not _current_state or _current_state is not PlayerState:
+		printerr("No state found, reverting...")
+		_current_state = old_state
+		return
+	_current_state.enter_state(self)
