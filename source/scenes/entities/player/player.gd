@@ -23,6 +23,9 @@ extends CharacterBody3D
 @export var state_dead: PlayerState
 @export var state_roll: PlayerState
 @export var state_hit: PlayerState
+@export_subgroup("Attack", "state_attack_")
+@export var state_attack_melee: PlayerState
+@export var state_attack_ranged: PlayerState
 
 var input_dir: Vector2 = Vector2.RIGHT
 var _current_state: PlayerState
@@ -65,8 +68,8 @@ func _validate_property(property: Dictionary) -> void:
 
 func change_state(new_state: PlayerState) -> void:
 	var old_state: PlayerState = _current_state
-	if old_state == new_state:
-		return
+	# if old_state == new_state and new_state is not PlayerMeleeAttackState:
+	# 	return
 	if _current_state:
 		_current_state.exit_state()
 	_current_state = new_state
@@ -75,6 +78,16 @@ func change_state(new_state: PlayerState) -> void:
 		_current_state = old_state
 		return
 	_current_state.enter_state(self)
+
+
+## Simplified shortcut for [method Input.get_vector] with preselected actions
+func get_movement_vector() -> Vector2:
+	return Input.get_vector(
+		&"move_left",
+		&"move_right",
+		&"move_fowards",
+		&"move_backwards",
+	)
 
 
 func _on_health_data_dead() -> void:

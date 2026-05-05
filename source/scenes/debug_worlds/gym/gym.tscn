@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://bjlq2xvqt2e3x" path="res://scripts/combat/area/hitbox_3d.gd" id="6_pmrfe"]
 [ext_resource type="Script" uid="uid://cb5dev147bfak" path="res://scripts/combat/modifiers/modifier.gd" id="7_b00bo"]
 [ext_resource type="Shader" uid="uid://dyytm8ffmovvi" path="res://scenes/vfx/static/lava.gdshader" id="7_jtflr"]
+[ext_resource type="Script" uid="uid://cqodxw2judeok" path="res://scripts/combat/modifiers/poison_modifier.gd" id="8_fp5oc"]
 [ext_resource type="Script" uid="uid://doxdnpadw7ldp" path="res://scripts/combat/attack_data.gd" id="8_ph1s4"]
 [ext_resource type="Texture2D" uid="uid://de5aie68gk0wk" path="res://assets/textures/stamps/símbolo-vermelho.png" id="9_fp5oc"]
 
@@ -32,12 +33,19 @@ volumetric_fog_albedo = Color(0.28478888, 0.07470257, 0.041376807, 1)
 [sub_resource type="Resource" id="Resource_jtflr"]
 script = ExtResource("5_pmrfe")
 
+[sub_resource type="Resource" id="Resource_5pm4g"]
+script = ExtResource("8_fp5oc")
+duration = 3.0
+poison_damage = 0.1
+metadata/_custom_type_script = "uid://cqodxw2judeok"
+
 [sub_resource type="Resource" id="Resource_2dxmu"]
 script = ExtResource("8_ph1s4")
 stamp_texture = ExtResource("9_fp5oc")
 stamp_size = Vector2(0.2, 0.2)
-attack_dmg = 69.0
-shield_dmg = 69.0
+attack_dmg = 0.1
+shield_dmg = 0.1
+mods = Array[ExtResource("7_b00bo")]([SubResource("Resource_5pm4g")])
 metadata/_custom_type_script = "uid://doxdnpadw7ldp"
 
 [sub_resource type="Gradient" id="Gradient_2vuqy"]
@@ -150,6 +158,7 @@ follow_offset = Vector3(0, 4, 3)
 follow_damping = true
 follow_axis_lock = 2
 look_at_offset = Vector3(0, 0.5, 0)
+noise_emitter_layer = 1
 align_transform_with_view = Callable()
 align_position_with_view = Callable()
 align_rotation_with_view = Callable()

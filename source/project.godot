@@ -33,6 +33,8 @@ PhantomCameraManager="*uid://duq6jhf6unyis"
 DialogueManager="*uid://c3rodes2l3gxb"
 MusicPlayer="*uid://u3iwlgfqlbwd"
 SaveSys="*uid://civ124t3mhsfk"
+InputHelper="*uid://cholww48njaeh"
+SceneManager="*uid://j20v4cg7v8m1"
 
 [debug]
 
@@ -54,7 +56,7 @@ window/size/mode.editor_hint=0
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/beehave/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg", "res://addons/phantom_camera/plugin.cfg")
+enabled=PackedStringArray("res://addons/beehave/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg", "res://addons/input_helper/plugin.cfg", "res://addons/phantom_camera/plugin.cfg", "res://addons/scene_manager/plugin.cfg")
 
 [file_customization]
 

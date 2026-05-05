@@ -23,6 +23,11 @@
 [ext_resource type="Script" uid="uid://c8ukgaej5g33g" path="res://scenes/entities/player/player_state_machine/states/dead_state.gd" id="21_fg2wu"]
 [ext_resource type="Script" uid="uid://cbjitg71due4f" path="res://scenes/entities/player/player_state_machine/states/roll_state.gd" id="22_7dqom"]
 [ext_resource type="Script" uid="uid://bkg6lot0o3k5w" path="res://scenes/entities/player/player_state_machine/states/hit_state.gd" id="23_go8vc"]
+[ext_resource type="Script" uid="uid://f6ome3hwfrw6" path="res://scenes/entities/player/player_state_machine/states/melee_attack_state.gd" id="24_wghkl"]
+[ext_resource type="Script" uid="uid://ccmiitq0sdh7j" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_noise_emitter_3d.gd" id="25_vs62q"]
+[ext_resource type="PackedScene" uid="uid://dhjt3y011u5hl" path="res://scenes/ui/player_interface.tscn" id="25_yk2xr"]
+[ext_resource type="Script" uid="uid://cuffvge5ad4aa" path="res://addons/phantom_camera/scripts/resources/phantom_camera_noise_3d.gd" id="26_qko2e"]
+[ext_resource type="AudioStream" uid="uid://byxfu5jqv6ygq" path="res://assets/sounds/hammer.mp3" id="27_6u2ft"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yywfu"]
 radius = 0.3
@@ -547,7 +552,19 @@ animations = [{
 [sub_resource type="SphereShape3D" id="SphereShape3D_r4dfn"]
 radius = 0.6
 
-[node name="Player" type="CharacterBody3D" unique_id=237217294 node_paths=PackedStringArray("stampable_sprite", "state_idle", "state_walk", "state_dead", "state_roll", "state_hit")]
+[sub_resource type="Resource" id="Resource_qko2e"]
+script = ExtResource("26_qko2e")
+amplitude = 6.0
+frequency = 5.0
+randomize_noise_seed = 0
+rotational_noise = false
+positional_noise = true
+rotational_multiplier_x = 0.5
+rotational_multiplier_y = 0.5
+rotational_multiplier_z = 0.5
+metadata/_custom_type_script = "uid://cuffvge5ad4aa"
+
+[node name="Player" type="CharacterBody3D" unique_id=237217294 node_paths=PackedStringArray("stampable_sprite", "state_idle", "state_walk", "state_dead", "state_roll", "state_hit", "state_attack_melee")]
 collision_layer = 8
 script = ExtResource("1_w3p2j")
 stampable_sprite = NodePath("ShadedAnimatedSprite3D")
@@ -564,13 +581,14 @@ state_walk = NodePath("States/PlayerWalkState")
 state_dead = NodePath("States/PlayerDeadState")
 state_roll = NodePath("States/PlayerRollState")
 state_hit = NodePath("States/PlayerHitState")
+state_attack_melee = NodePath("States/PlayerMeleeAttackState")
 metadata/_custom_type_script = "uid://c7u4g2ppur0xh"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1221538406]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_yywfu")
 
-[node name="ShadedAnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=828992761 node_paths=PackedStringArray("stamp_viewport")]
+[node name="ShadedAnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=828992761 node_paths=PackedStringArray("audio_player", "stamp_viewport")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 material_override = SubResource("ShaderMaterial_ovg4i")
 billboard = 1
@@ -578,6 +596,7 @@ sprite_frames = SubResource("SpriteFrames_go8vc")
 animation = &"death"
 autoplay = "idle"
 script = ExtResource("5_5sj0x")
+audio_player = NodePath("@AudioStreamPlayer@19815")
 stamp_viewport = NodePath("SubViewport")
 metadata/_custom_type_script = "uid://ctmgj3s2w7dsb"
 
@@ -591,6 +610,7 @@ render_target_update_mode = 1
 [node name="Hurtbox3D" type="Area3D" parent="." unique_id=769131646 node_paths=PackedStringArray("actor")]
 collision_layer = 0
 collision_mask = 4
+monitorable = false
 script = ExtResource("15_70kwc")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://bmgcj6fweob2m"
@@ -601,7 +621,6 @@ shape = SubResource("SphereShape3D_r4dfn")
 
 [node name="HealthData" type="Node" parent="." unique_id=1085796472]
 script = ExtResource("16_pcd0u")
-debug_enable = true
 initial_health = 10.0
 metadata/_custom_type_script = "uid://dganhrqw3fv7u"
 
@@ -644,6 +663,23 @@ metadata/_custom_type_script = "uid://bkg6lot0o3k5w"
 stream = ExtResource("14_7dqom")
 volume_db = 0.2
 bus = &"Sounds"
+
+[node name="PlayerMeleeAttackState" type="Node" parent="States" unique_id=1720064375 node_paths=PackedStringArray("noise_emitter", "audio_player")]
+script = ExtResource("24_wghkl")
+noise_emitter = NodePath("AttackNoise")
+audio_player = NodePath("HitSound")
+metadata/_custom_type_script = "uid://f6ome3hwfrw6"
+
+[node name="AttackNoise" type="Node3D" parent="States/PlayerMeleeAttackState" unique_id=1060758920]
+script = ExtResource("25_vs62q")
+noise = SubResource("Resource_qko2e")
+duration = 0.3
+metadata/_custom_type_script = "uid://ccmiitq0sdh7j"
+
+[node name="HitSound" type="AudioStreamPlayer" parent="States/PlayerMeleeAttackState" unique_id=1506209330]
+stream = ExtResource("27_6u2ft")
+
+[node name="PlayerInterface" parent="." unique_id=1667225147 instance=ExtResource("25_yk2xr")]
 
 [connection signal="burned" from="ShadedAnimatedSprite3D" to="." method="_on_animated_sprite_burned"]
 [connection signal="success_hit" from="Hurtbox3D" to="ShieldData" method="_on_hurtbox_success_hit"]
