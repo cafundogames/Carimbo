@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://bjwd8y56vnx2g"]
+
+[ext_resource type="Script" uid="uid://c3ok7vgj5rs6i" path="res://scenes/objects/obstacles/lava_pool/lava_pool.gd" id="1_2rnx8"]
+[ext_resource type="Script" uid="uid://cb5dev147bfak" path="res://scripts/combat/modifiers/modifier.gd" id="2_jvf55"]
+[ext_resource type="Script" uid="uid://doxdnpadw7ldp" path="res://scripts/combat/attack_data.gd" id="3_gyf2b"]
+[ext_resource type="Texture2D" uid="uid://de5aie68gk0wk" path="res://assets/textures/stamps/símbolo-vermelho.png" id="4_lm5ja"]
+[ext_resource type="Shader" uid="uid://dyytm8ffmovvi" path="res://scenes/vfx/static/lava.gdshader" id="5_kp4c2"]
+
+[sub_resource type="Resource" id="Resource_2dxmu"]
+resource_local_to_scene = true
+script = ExtResource("3_gyf2b")
+stamp_texture = ExtResource("4_lm5ja")
+attack_dmg = 99.0
+shield_dmg = 99.0
+metadata/_custom_type_script = "uid://doxdnpadw7ldp"
+
+[sub_resource type="Gradient" id="Gradient_2vuqy"]
+offsets = PackedFloat32Array(0.18681319, 0.48351648, 0.67582417, 0.8131868)
+colors = PackedColorArray(0.9, 0.225, 0, 1, 0.9047094, 0.4903581, 5.7756904e-07, 1, 0.85, 0.6853834, 0.14450002, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hvi84"]
+gradient = SubResource("Gradient_2vuqy")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_fyvx4"]
+noise_type = 4
+seed = 3
+fractal_type = 2
+fractal_lacunarity = 1.5
+fractal_gain = 0.75
+fractal_weighted_strength = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_w76ot"]
+noise = SubResource("FastNoiseLite_fyvx4")
+seamless = true
+seamless_blend_skirt = 0.37
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_5738e"]
+noise_type = 4
+seed = 2
+frequency = 0.005
+fractal_type = 2
+fractal_lacunarity = 1.5
+fractal_gain = 0.75
+fractal_weighted_strength = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rfl1x"]
+noise = SubResource("FastNoiseLite_5738e")
+seamless = true
+seamless_blend_skirt = 0.37
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uaswc"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("5_kp4c2")
+shader_parameter/displacement_map = SubResource("NoiseTexture2D_w76ot")
+shader_parameter/liquid = SubResource("NoiseTexture2D_rfl1x")
+shader_parameter/color_ramp = SubResource("GradientTexture1D_hvi84")
+shader_parameter/glow_strength = 1.10000001639132
+shader_parameter/glow_oscillation = 0.80000001192096
+shader_parameter/displacement_strength = 0.3999999910592
+shader_parameter/displacement_vector = Vector3(-1, 1, 0)
+shader_parameter/displacement_speed = 0.10000000149012
+shader_parameter/uv_scale = Vector2(1, 1)
+shader_parameter/uv_offset = Vector2(1, 1)
+shader_parameter/uv_offset2 = Vector2(1, 0)
+shader_parameter/mix_amount = 0.5999999865888
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_b00bo"]
+resource_local_to_scene = true
+material = SubResource("ShaderMaterial_uaswc")
+size = Vector2(8, 8)
+subdivide_width = 32
+subdivide_depth = 32
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ph1s4"]
+resource_local_to_scene = true
+size = Vector3(8, 1, 8)
+
+[node name="LavaPool" type="Area3D" unique_id=1150751571 node_paths=PackedStringArray("lava_mesh", "hitbox_collision")]
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_2rnx8")
+size = Vector2(8, 8)
+lava_mesh = NodePath("LavaMesh")
+hitbox_collision = NodePath("HitboxCollision")
+attack_info = SubResource("Resource_2dxmu")
+metadata/_custom_type_script = "uid://c3ok7vgj5rs6i"
+
+[node name="LavaMesh" type="MeshInstance3D" parent="." unique_id=745742438]
+unique_name_in_owner = true
+mesh = SubResource("PlaneMesh_b00bo")
+
+[node name="HitboxCollision" type="CollisionShape3D" parent="." unique_id=452833845]
+unique_name_in_owner = true
+shape = SubResource("BoxShape3D_ph1s4")

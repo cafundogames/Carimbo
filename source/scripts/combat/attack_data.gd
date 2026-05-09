@@ -6,7 +6,7 @@ extends Resource
 ## The texture to be used for stamping the target's sprite
 @export var stamp_texture: Texture2D
 ## The size of the stamp when stamping the target's sprite
-@export_custom(PROPERTY_HINT_LINK, "") var stamp_size: Vector2 = Vector2.ONE
+@export_custom(PROPERTY_HINT_LINK, "") var stamp_size: Vector2 = Vector2.ONE * 0.2
 ## The amount of damage to cause
 @export var attack_dmg: float
 ## The amount of damage to cause to shields

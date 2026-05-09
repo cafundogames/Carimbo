@@ -12,13 +12,15 @@ var active_modifiers: Array[Modifier]
 func _ready() -> void:
 	if not actor:
 		actor = self.owner
+	if Engine.is_editor_hint():
+		return
 	area_entered.connect(_on_area_entered)
 	monitoring = true
 	monitorable = false
 
 
 func _process(delta: float) -> void:
-	if active_modifiers.is_empty():
+	if Engine.is_editor_hint():
 		return
 	for mod: Modifier in active_modifiers:
 		var finished = mod.process(delta)
