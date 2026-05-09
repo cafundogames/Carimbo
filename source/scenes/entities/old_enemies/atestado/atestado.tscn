@@ -1,0 +1,325 @@
+[gd_scene format=3 uid="uid://c24ksaog50v3g"]
+
+[ext_resource type="Script" uid="uid://cg1dswyw2p1op" path="res://scenes/entities/old_enemies/enemy_character.gd" id="1_vp4k7"]
+[ext_resource type="Shader" uid="uid://dl6ampid6rth6" path="res://scenes/components/stamped_animated_sprite/shaded_animated_sprite_3d.gdshader" id="2_1hsg8"]
+[ext_resource type="Texture2D" uid="uid://ch1fj0j2vc2r1" path="res://resources/burn_noise_texture.tres" id="3_nbbw7"]
+[ext_resource type="Texture2D" uid="uid://clakkgs3jf6e" path="res://assets/textures/enemies/atestado/atestado.png" id="4_8juln"]
+[ext_resource type="Texture2D" uid="uid://o34vnik8cwo4" path="res://assets/textures/paper/Paper003_1K-JPG_NormalGL.jpg" id="5_cxioh"]
+[ext_resource type="Texture2D" uid="uid://dkbujjnpxwia0" path="res://assets/textures/paper/Paper003_1K-JPG_Roughness.jpg" id="6_bue7f"]
+[ext_resource type="Script" uid="uid://ctmgj3s2w7dsb" path="res://scenes/components/stamped_animated_sprite/shaded_animated_sprite_3d.gd" id="7_lpg32"]
+[ext_resource type="AudioStream" uid="uid://dfe4v2sdvd1bd" path="res://assets/sounds/burn1.mp3" id="8_bsla6"]
+[ext_resource type="Script" uid="uid://baffaklkbk27f" path="res://scripts/attack_system/hitbox_component.gd" id="8_nbitu"]
+[ext_resource type="Script" uid="uid://cqxuelwl2k4bg" path="res://scripts/attack_system/stats_component.gd" id="9_86c13"]
+[ext_resource type="AudioStream" uid="uid://b8ejg8s8ue10q" path="res://assets/sounds/paper_tear1.mp3" id="9_rccfi"]
+[ext_resource type="Script" uid="uid://c15vrenp7llbg" path="res://scripts/debug/debug_label.gd" id="10_7p4y6"]
+[ext_resource type="Script" uid="uid://bfied8f76qv1k" path="res://scripts/components/input_component.gd" id="11_8bkgb"]
+[ext_resource type="Script" uid="uid://c6tbcxlt1e2hy" path="res://scripts/components/move_component.gd" id="12_l6imi"]
+[ext_resource type="Script" uid="uid://bb0t2ovl7wifo" path="res://addons/beehave/nodes/beehave_tree.gd" id="13_taiqs"]
+[ext_resource type="Script" uid="uid://cw22yurt5l74k" path="res://addons/beehave/nodes/composites/selector_reactive.gd" id="14_7p4y6"]
+[ext_resource type="Script" uid="uid://dorri1tul8gfx" path="res://addons/beehave/nodes/decorators/delayer.gd" id="15_8bkgb"]
+[ext_resource type="Script" uid="uid://2qri6rrfv8ui" path="res://addons/beehave/nodes/decorators/cooldown.gd" id="15_bsla6"]
+[ext_resource type="Script" uid="uid://cg016dbe7gs1x" path="res://addons/beehave/nodes/composites/sequence.gd" id="16_l6imi"]
+[ext_resource type="Script" uid="uid://538o4tqp8sxm" path="res://scripts/beehave/leaf/action/set_wander_target_action.gd" id="17_taiqs"]
+[ext_resource type="Script" uid="uid://bg1soc5i52jps" path="res://scripts/beehave/leaf/action/start_navigation_action.gd" id="18_6saxa"]
+[ext_resource type="Script" uid="uid://conlbm78k0yfx" path="res://scripts/beehave/leaf/action/play_sprite_frames_animation_action.gd" id="19_6saxa"]
+[ext_resource type="Script" uid="uid://we22430vcb44" path="res://addons/beehave/nodes/decorators/time_limiter.gd" id="19_bsla6"]
+[ext_resource type="Script" uid="uid://c541rfah1pvw8" path="res://scripts/beehave/leaf/condition/wait_for_destination_condition.gd" id="20_rccfi"]
+[ext_resource type="Script" uid="uid://sqhnl6cqhp06" path="res://scripts/beehave/leaf/action/stop_navigation_action.gd" id="21_7tueb"]
+[ext_resource type="Script" uid="uid://qvwyjwtkcuxs" path="res://scripts/beehave/leaf/action/get_allies_action.gd" id="22_l6imi"]
+[ext_resource type="Script" uid="uid://v4jop1qp3ahx" path="res://scripts/beehave/leaf/action/buff_allies_action.gd" id="23_taiqs"]
+[ext_resource type="PackedScene" uid="uid://cd1b6a08kepn4" path="res://scenes/vfx/shields.tscn" id="28_7tueb"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1hsg8"]
+radius = 0.7758789
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x3nh7"]
+atlas = ExtResource("4_8juln")
+region = Rect2(0, 0, 509, 512)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_nbbw7"]
+viewport_path = NodePath("ShadedAnimatedSprite3D/SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6saxa"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("2_1hsg8")
+shader_parameter/roughness = 1.0
+shader_parameter/texture_roughness = ExtResource("6_bue7f")
+shader_parameter/specular = 0.249999994412
+shader_parameter/texture_normal = ExtResource("5_cxioh")
+shader_parameter/normal_scale = 1.5600008340999985
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = SubResource("AtlasTexture_x3nh7")
+shader_parameter/texture_carimbo = SubResource("ViewportTexture_nbbw7")
+shader_parameter/carimbo_glow_intensity = 10.0
+shader_parameter/burn_texture = ExtResource("3_nbbw7")
+shader_parameter/burn_amount = 0.0
+shader_parameter/burn_size = 0.150000007125
+shader_parameter/burn_smoothness = 0.1330000063175
+shader_parameter/burn_glow_color = Color(1, 0.32, 0, 1)
+shader_parameter/burn_glow_intensity = 10.0
+shader_parameter/region_rect = Vector4(0, 0, 0.3331152, 0.25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bsla6"]
+atlas = ExtResource("4_8juln")
+region = Rect2(0, 512, 509, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rccfi"]
+atlas = ExtResource("4_8juln")
+region = Rect2(509, 512, 509, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7tueb"]
+atlas = ExtResource("4_8juln")
+region = Rect2(0, 1536, 509, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qqj0c"]
+atlas = ExtResource("4_8juln")
+region = Rect2(0, 1024, 509, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yeg7t"]
+atlas = ExtResource("4_8juln")
+region = Rect2(0, 512, 509, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f45wa"]
+atlas = ExtResource("4_8juln")
+region = Rect2(509, 0, 509, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_adp3q"]
+atlas = ExtResource("4_8juln")
+region = Rect2(1018, 0, 509, 512)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bsla6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bsla6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rccfi")
+}],
+"loop": false,
+"name": &"buff",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7tueb")
+}],
+"loop": false,
+"name": &"death",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qqj0c")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x3nh7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yeg7t")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f45wa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_adp3q")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 6.0
+}]
+
+[node name="Atestado" type="CharacterBody3D" unique_id=1428994103 node_paths=PackedStringArray("beehave_tree", "stats_component", "stampable_sprite") groups=["monster"]]
+collision_layer = 16
+script = ExtResource("1_vp4k7")
+beehave_tree = NodePath("AtestadoBeehaveTree")
+stats_component = NodePath("StatsComponent")
+stampable_sprite = NodePath("ShadedAnimatedSprite3D")
+invert_flip = true
+metadata/_custom_type_script = "uid://cg1dswyw2p1op"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1117921097]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_1hsg8")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1578428129]
+avoidance_enabled = true
+radius = 1.0
+
+[node name="ShadedAnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=33503432 node_paths=PackedStringArray("audio_player", "stamp_viewport")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+material_override = SubResource("ShaderMaterial_6saxa")
+pixel_size = 0.005
+billboard = 1
+sprite_frames = SubResource("SpriteFrames_bsla6")
+animation = &"idle"
+frame_progress = 0.076493315
+script = ExtResource("7_lpg32")
+audio_player = NodePath("AudioStreamPlayer3D")
+stamp_viewport = NodePath("SubViewport")
+metadata/_custom_type_script = "uid://ctmgj3s2w7dsb"
+
+[node name="SubViewport" type="SubViewport" parent="ShadedAnimatedSprite3D" unique_id=1093507412]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(509, 512)
+render_target_clear_mode = 2
+render_target_update_mode = 1
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="ShadedAnimatedSprite3D" unique_id=741231975]
+stream = ExtResource("8_bsla6")
+bus = &"Sounds"
+
+[node name="DeathAudio" type="AudioStreamPlayer3D" parent="ShadedAnimatedSprite3D" unique_id=475483995]
+stream = ExtResource("9_rccfi")
+bus = &"Sounds"
+
+[node name="Shields" parent="ShadedAnimatedSprite3D" unique_id=1272549898 instance=ExtResource("28_7tueb")]
+
+[node name="HitboxComponent" type="Area3D" parent="." unique_id=1834025907 node_paths=PackedStringArray("stampable_sprite")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("8_nbitu")
+connect_signals_enable = true
+stampable_sprite = NodePath("../ShadedAnimatedSprite3D")
+metadata/_custom_type_script = "uid://baffaklkbk27f"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitboxComponent" unique_id=2144645258]
+shape = SubResource("CapsuleShape3D_1hsg8")
+
+[node name="StatsComponent" type="Node" parent="." unique_id=1995025656 node_paths=PackedStringArray("input_component", "hitbox_component", "beehave_tree")]
+script = ExtResource("9_86c13")
+max_health = 3.0
+connect_signals_enable = true
+input_component = NodePath("../InputComponent")
+hitbox_component = NodePath("../HitboxComponent")
+beehave_tree = NodePath("../AtestadoBeehaveTree")
+ignore_armor = true
+metadata/_custom_type_script = "uid://cqxuelwl2k4bg"
+
+[node name="DebugLabel3D" type="Label3D" parent="." unique_id=2033551976 node_paths=PackedStringArray("stats_component")]
+editor_description = "Uma label para debug que irá mostrar os valores de vida e armadura de um StatsComponent"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+billboard = 1
+text = "FILHO DA PUTA"
+script = ExtResource("10_7p4y6")
+stats_component = NodePath("../StatsComponent")
+metadata/_custom_type_script = "uid://c15vrenp7llbg"
+
+[node name="InputComponent" type="Node" parent="." unique_id=972598488]
+script = ExtResource("11_8bkgb")
+metadata/_custom_type_script = "uid://bfied8f76qv1k"
+
+[node name="MoveComponent" type="Node" parent="." unique_id=1609042723 node_paths=PackedStringArray("actor", "input_component")]
+script = ExtResource("12_l6imi")
+actor = NodePath("..")
+input_component = NodePath("../InputComponent")
+metadata/_custom_type_script = "uid://c6tbcxlt1e2hy"
+
+[node name="AtestadoBeehaveTree" type="Node" parent="." unique_id=331908298 node_paths=PackedStringArray("blackboard", "actor")]
+script = ExtResource("13_taiqs")
+blackboard = NodePath("@Node@32535")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://bb0t2ovl7wifo"
+
+[node name="SelectorReactiveComposite" type="Node" parent="AtestadoBeehaveTree" unique_id=2030577537]
+script = ExtResource("14_7p4y6")
+metadata/_custom_type_script = "uid://cw22yurt5l74k"
+
+[node name="BuffAllies" type="Node" parent="AtestadoBeehaveTree/SelectorReactiveComposite" unique_id=2072125600]
+script = ExtResource("15_bsla6")
+wait_time = 3.0
+metadata/_custom_type_script = "uid://2qri6rrfv8ui"
+
+[node name="SequenceComposite" type="Node" parent="AtestadoBeehaveTree/SelectorReactiveComposite/BuffAllies" unique_id=314006029]
+script = ExtResource("16_l6imi")
+metadata/_custom_type_script = "uid://cg016dbe7gs1x"
+
+[node name="PlaySpriteFramesAnimationAction2" type="Node" parent="AtestadoBeehaveTree/SelectorReactiveComposite/BuffAllies/SequenceComposite" unique_id=162447206 node_paths=PackedStringArray("animated_sprite")]
+script = ExtResource("19_6saxa")
+animated_sprite = NodePath("../../../../../ShadedAnimatedSprite3D")
+animation_name = &"buff"
+metadata/_custom_type_script = "uid://conlbm78k0yfx"
+
+[node name="GetAlliesAction" type="Node" parent="AtestadoBeehaveTree/SelectorReactiveComposite/BuffAllies/SequenceComposite" unique_id=1041740145]
+script = ExtResource("22_l6imi")
+metadata/_custom_type_script = "uid://qvwyjwtkcuxs"
+
+[node name="DelayDecorator" type="Node" parent="AtestadoBeehaveTree/SelectorReactiveComposite/BuffAllies/SequenceComposite" unique_id=1335150950]
+script = ExtResource("15_8bkgb")
+wait_time = 0.5
+metadata/_custom_type_script = "uid://dorri1tul8gfx"
+
+[node name="BuffAlliesAction" type="Node" parent="AtestadoBeehaveTree/SelectorReactiveComposite/BuffAllies/SequenceComposite/DelayDecorator" unique_id=1937720712]
+script = ExtResource("23_taiqs")
+armor_buff = 1.0
+metadata/_custom_type_script = "uid://v4jop1qp3ahx"
+
+[node name="PlaySpriteFramesAnimationAction" type="Node" parent="AtestadoBeehaveTree/SelectorReactiveComposite/BuffAllies/SequenceComposite" unique_id=205680483 node_paths=PackedStringArray("animated_sprite")]
+script = ExtResource("19_6saxa")
+animated_sprite = NodePath("../../../../../ShadedAnimatedSprite3D")
+animation_name = &"buff"
+metadata/_custom_type_script = "uid://conlbm78k0yfx"
+
+[node name="Idle" type="Node" parent="AtestadoBeehaveTree/SelectorReactiveComposite" unique_id=1452438253]
+script = ExtResource("15_8bkgb")
+wait_time = 3.0
+metadata/_custom_type_script = "uid://dorri1tul8gfx"
+
+[node name="SequenceComposite" type="Node" parent="AtestadoBeehaveTree/SelectorReactiveComposite/Idle" unique_id=348041074]
+script = ExtResource("16_l6imi")
+metadata/_custom_type_script = "uid://cg016dbe7gs1x"
+
+[node name="SetWanderTargetAction" type="Node" parent="AtestadoBeehaveTree/SelectorReactiveComposite/Idle/SequenceComposite" unique_id=954603235 node_paths=PackedStringArray("input_component")]
+script = ExtResource("17_taiqs")
+wander_range = 8.0
+input_component = NodePath("../../../../../InputComponent")
+metadata/_custom_type_script = "uid://538o4tqp8sxm"
+
+[node name="StartNavigationAction" type="Node" parent="AtestadoBeehaveTree/SelectorReactiveComposite/Idle/SequenceComposite" unique_id=1841854046 node_paths=PackedStringArray("input_component", "navigation_agent")]
+script = ExtResource("18_6saxa")
+input_component = NodePath("../../../../../InputComponent")
+navigation_agent = NodePath("../../../../../NavigationAgent3D")
+metadata/_custom_type_script = "uid://bg1soc5i52jps"
+
+[node name="PlaySpriteFramesAnimationAction2" type="Node" parent="AtestadoBeehaveTree/SelectorReactiveComposite/Idle/SequenceComposite" unique_id=989635540 node_paths=PackedStringArray("animated_sprite")]
+script = ExtResource("19_6saxa")
+animated_sprite = NodePath("../../../../../ShadedAnimatedSprite3D")
+animation_name = &"walk"
+metadata/_custom_type_script = "uid://conlbm78k0yfx"
+
+[node name="TimeLimiterDecorator" type="Node" parent="AtestadoBeehaveTree/SelectorReactiveComposite/Idle/SequenceComposite" unique_id=553275490]
+script = ExtResource("19_bsla6")
+wait_time = 10.0
+metadata/_custom_type_script = "uid://we22430vcb44"
+
+[node name="WaitForDestinationCondition" type="Node" parent="AtestadoBeehaveTree/SelectorReactiveComposite/Idle/SequenceComposite/TimeLimiterDecorator" unique_id=617576682 node_paths=PackedStringArray("input_component")]
+script = ExtResource("20_rccfi")
+input_component = NodePath("../../../../../../InputComponent")
+metadata/_custom_type_script = "uid://c541rfah1pvw8"
+
+[node name="StopNavigationAction" type="Node" parent="AtestadoBeehaveTree/SelectorReactiveComposite/Idle/SequenceComposite" unique_id=626323008 node_paths=PackedStringArray("input_component")]
+script = ExtResource("21_7tueb")
+input_component = NodePath("../../../../../InputComponent")
+metadata/_custom_type_script = "uid://sqhnl6cqhp06"
+
+[node name="PlaySpriteFramesAnimationAction" type="Node" parent="AtestadoBeehaveTree/SelectorReactiveComposite/Idle/SequenceComposite" unique_id=989924790 node_paths=PackedStringArray("animated_sprite")]
+script = ExtResource("19_6saxa")
+animated_sprite = NodePath("../../../../../ShadedAnimatedSprite3D")
+animation_name = &"idle"
+metadata/_custom_type_script = "uid://conlbm78k0yfx"
+
+[connection signal="dead" from="." to="ShadedAnimatedSprite3D/DeathAudio" method="play"]
+[connection signal="armor_changed" from="StatsComponent" to="ShadedAnimatedSprite3D/Shields" method="on_armor_changed"]

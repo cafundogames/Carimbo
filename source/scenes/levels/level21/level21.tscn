@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://ckxpmu5lrfiql" path="res://scenes/levels/level_scene.gd" id="1_efbel"]
 [ext_resource type="MeshLibrary" uid="uid://be3yh5mqefut3" path="res://resources/mesh_library/level_props.meshlib" id="2_iwy7d"]
 [ext_resource type="PackedScene" uid="uid://c3hpiq2ftpgt8" path="res://scenes/levels/doors/scene_door.tscn" id="3_y8bf6"]
-[ext_resource type="PackedScene" uid="uid://bxgw65gxcyvvi" path="res://scenes/entities/enemies/nascimento/certidao_nascimento.tscn" id="4_e7okl"]
+[ext_resource type="PackedScene" uid="uid://bxgw65gxcyvvi" path="res://scenes/entities/old_enemies/nascimento/certidao_nascimento.tscn" id="4_e7okl"]
 [ext_resource type="Texture2D" uid="uid://lkeultvpjsj1" path="res://assets/textures/logoda4_dark.svg" id="7_l680p"]
 [ext_resource type="PackedScene" uid="uid://m5dmges2kssb" path="res://scenes/vfx/static/lava/lava_pool.tscn" id="9_g5cx2"]
 [ext_resource type="Environment" uid="uid://c44ylihrd2515" path="res://resources/envoriment/fire_enviroment.tres" id="10_x1igu"]

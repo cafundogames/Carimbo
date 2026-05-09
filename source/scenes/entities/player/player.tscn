@@ -29,9 +29,6 @@
 [ext_resource type="Script" uid="uid://cuffvge5ad4aa" path="res://addons/phantom_camera/scripts/resources/phantom_camera_noise_3d.gd" id="26_qko2e"]
 [ext_resource type="AudioStream" uid="uid://byxfu5jqv6ygq" path="res://assets/sounds/hammer.mp3" id="27_6u2ft"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yywfu"]
-radius = 0.3
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_80i3n"]
 atlas = ExtResource("6_70kwc")
 region = Rect2(2304, 0, 256, 256)
@@ -549,8 +546,11 @@ animations = [{
 "speed": 12.0
 }]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_r4dfn"]
-radius = 0.6
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yywfu"]
+radius = 0.3
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6u2ft"]
+height = 1.7939453
 
 [sub_resource type="Resource" id="Resource_qko2e"]
 script = ExtResource("26_qko2e")
@@ -584,10 +584,6 @@ state_hit = NodePath("States/PlayerHitState")
 state_attack_melee = NodePath("States/PlayerMeleeAttackState")
 metadata/_custom_type_script = "uid://c7u4g2ppur0xh"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1221538406]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_yywfu")
-
 [node name="ShadedAnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=828992761 node_paths=PackedStringArray("audio_player", "stamp_viewport")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 material_override = SubResource("ShaderMaterial_ovg4i")
@@ -607,6 +603,10 @@ size = Vector2i(270, 270)
 render_target_clear_mode = 2
 render_target_update_mode = 1
 
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1221538406]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_yywfu")
+
 [node name="Hurtbox3D" type="Area3D" parent="." unique_id=769131646 node_paths=PackedStringArray("actor")]
 collision_layer = 0
 collision_mask = 4
@@ -616,8 +616,8 @@ actor = NodePath("..")
 metadata/_custom_type_script = "uid://bmgcj6fweob2m"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox3D" unique_id=1748917751]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("SphereShape3D_r4dfn")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.87841797, 0)
+shape = SubResource("CapsuleShape3D_6u2ft")
 
 [node name="HealthData" type="Node" parent="." unique_id=1085796472]
 script = ExtResource("16_pcd0u")

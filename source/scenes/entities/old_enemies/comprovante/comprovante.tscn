@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dxyd470cqorqq"]
 
-[ext_resource type="Script" uid="uid://cg1dswyw2p1op" path="res://scenes/entities/enemies/enemy_character.gd" id="1_xc5op"]
+[ext_resource type="Script" uid="uid://cg1dswyw2p1op" path="res://scenes/entities/old_enemies/enemy_character.gd" id="1_xc5op"]
 [ext_resource type="Script" uid="uid://ctmgj3s2w7dsb" path="res://scenes/components/stamped_animated_sprite/shaded_animated_sprite_3d.gd" id="2_70sd0"]
 [ext_resource type="Script" uid="uid://cqxuelwl2k4bg" path="res://scripts/attack_system/stats_component.gd" id="3_dn2of"]
 [ext_resource type="Script" uid="uid://c6tbcxlt1e2hy" path="res://scripts/components/move_component.gd" id="4_ryg5p"]

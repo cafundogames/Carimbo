@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b2sgpfxgwrjy3"]
 
-[ext_resource type="Script" uid="uid://cg1dswyw2p1op" path="res://scenes/entities/enemies/enemy_character.gd" id="1_2k8tu"]
+[ext_resource type="Script" uid="uid://cg1dswyw2p1op" path="res://scenes/entities/old_enemies/enemy_character.gd" id="1_2k8tu"]
 [ext_resource type="Shader" uid="uid://dl6ampid6rth6" path="res://scenes/components/stamped_animated_sprite/shaded_animated_sprite_3d.gdshader" id="2_w1f8u"]
 [ext_resource type="Texture2D" uid="uid://ch1fj0j2vc2r1" path="res://resources/burn_noise_texture.tres" id="3_s7v4p"]
 [ext_resource type="Texture2D" uid="uid://b7xdumv7hexii" path="res://assets/textures/enemies/clt/clt.png" id="4_hktqo"]
@@ -34,7 +34,7 @@
 [ext_resource type="PackedScene" uid="uid://bbea24bmwk3a2" path="res://scenes/objects/attacks/coffin_spawner.tscn" id="33_7pnnt"]
 [ext_resource type="Script" uid="uid://2qri6rrfv8ui" path="res://addons/beehave/nodes/decorators/cooldown.gd" id="33_kq10k"]
 [ext_resource type="PackedScene" uid="uid://dyyhajvjbbjqp" path="res://scenes/objects/weapons/push.tscn" id="34_7pnnt"]
-[ext_resource type="PackedScene" uid="uid://dxyd470cqorqq" path="res://scenes/entities/enemies/comprovante/comprovante.tscn" id="36_7fl6r"]
+[ext_resource type="PackedScene" uid="uid://dxyd470cqorqq" path="res://scenes/entities/old_enemies/comprovante/comprovante.tscn" id="36_7fl6r"]
 [ext_resource type="Script" uid="uid://chor6813h6vl0" path="res://scripts/beehave/leaf/action/set_specific_target_action.gd" id="37_8p563"]
 [ext_resource type="Script" uid="uid://oc2hkcrhiyfa" path="res://scripts/beehave/leaf/condition/is_in_range_condition.gd" id="38_kq10k"]
 [ext_resource type="PackedScene" uid="uid://bhppg2f3nkfmv" path="res://scenes/objects/attacks/powerfull_attack.tscn" id="39_g2l4d"]

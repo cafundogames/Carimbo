@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bxgw65gxcyvvi"]
 
-[ext_resource type="Script" uid="uid://cg1dswyw2p1op" path="res://scenes/entities/enemies/enemy_character.gd" id="1_syafj"]
+[ext_resource type="Script" uid="uid://cg1dswyw2p1op" path="res://scenes/entities/old_enemies/enemy_character.gd" id="1_syafj"]
 [ext_resource type="Script" uid="uid://ctmgj3s2w7dsb" path="res://scenes/components/stamped_animated_sprite/shaded_animated_sprite_3d.gd" id="2_1fn1j"]
 [ext_resource type="Texture2D" uid="uid://b4y7mdvpe6yn" path="res://assets/textures/enemies/nascimento/certidao_nascimento.png" id="2_duv7f"]
 [ext_resource type="Shader" uid="uid://dl6ampid6rth6" path="res://scenes/components/stamped_animated_sprite/shaded_animated_sprite_3d.gdshader" id="2_kyicb"]
@@ -20,7 +20,7 @@
 [ext_resource type="Script" uid="uid://vfqqt15t76vb" path="res://scripts/beehave/leaf/action/evolve_action.gd" id="14_duv7f"]
 [ext_resource type="Script" uid="uid://docm6x45208x4" path="res://scripts/beehave/leaf/action/play_particle_action.gd" id="16_g2kvs"]
 [ext_resource type="PackedScene" uid="uid://68uyk4amv4a6" path="res://scenes/vfx/particles/puff.tscn" id="17_idvk1"]
-[ext_resource type="PackedScene" uid="uid://xw64ux4jg7fg" path="res://scenes/entities/enemies/errige/errige.tscn" id="18_lbcd4"]
+[ext_resource type="PackedScene" uid="uid://xw64ux4jg7fg" path="res://scenes/entities/old_enemies/errige/errige.tscn" id="18_lbcd4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lbcd4"]
 atlas = ExtResource("2_duv7f")

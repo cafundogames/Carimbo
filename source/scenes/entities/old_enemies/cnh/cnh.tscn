@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://xvwtpoqlp7hf"]
 
-[ext_resource type="Script" uid="uid://cg1dswyw2p1op" path="res://scenes/entities/enemies/enemy_character.gd" id="1_jck3v"]
+[ext_resource type="Script" uid="uid://cg1dswyw2p1op" path="res://scenes/entities/old_enemies/enemy_character.gd" id="1_jck3v"]
 [ext_resource type="Shader" uid="uid://dl6ampid6rth6" path="res://scenes/components/stamped_animated_sprite/shaded_animated_sprite_3d.gdshader" id="2_ml6f8"]
 [ext_resource type="Script" uid="uid://fjgad71t0sd4" path="res://scripts/attack_system/hurtbox_component.gd" id="2_ra08q"]
 [ext_resource type="Texture2D" uid="uid://ch1fj0j2vc2r1" path="res://resources/burn_noise_texture.tres" id="3_3fptt"]

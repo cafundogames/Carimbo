@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://xw64ux4jg7fg"]
 
-[ext_resource type="Script" uid="uid://cg1dswyw2p1op" path="res://scenes/entities/enemies/enemy_character.gd" id="1_trs0h"]
+[ext_resource type="Script" uid="uid://cg1dswyw2p1op" path="res://scenes/entities/old_enemies/enemy_character.gd" id="1_trs0h"]
 [ext_resource type="Script" uid="uid://cqxuelwl2k4bg" path="res://scripts/attack_system/stats_component.gd" id="2_3psif"]
 [ext_resource type="Shader" uid="uid://dl6ampid6rth6" path="res://scenes/components/stamped_animated_sprite/shaded_animated_sprite_3d.gdshader" id="2_8lugo"]
 [ext_resource type="Texture2D" uid="uid://d20vsxwygb45d" path="res://assets/textures/enemies/errige/errige.png" id="2_c2hyi"]

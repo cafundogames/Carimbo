@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b0e0dmku8m61b"]
 
-[ext_resource type="Script" uid="uid://cg1dswyw2p1op" path="res://scenes/entities/enemies/enemy_character.gd" id="1_n6cjt"]
+[ext_resource type="Script" uid="uid://cg1dswyw2p1op" path="res://scenes/entities/old_enemies/enemy_character.gd" id="1_n6cjt"]
 [ext_resource type="Shader" uid="uid://dl6ampid6rth6" path="res://scenes/components/stamped_animated_sprite/shaded_animated_sprite_3d.gdshader" id="2_r3b27"]
 [ext_resource type="Texture2D" uid="uid://ch1fj0j2vc2r1" path="res://resources/burn_noise_texture.tres" id="3_2b72l"]
 [ext_resource type="Texture2D" uid="uid://cr2wujfxi5bm2" path="res://assets/textures/enemies/casamento/casamento.png" id="4_hepet"]

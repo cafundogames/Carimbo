@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://ckxpmu5lrfiql" path="res://scenes/levels/level_scene.gd" id="1_6hi02"]
 [ext_resource type="MeshLibrary" uid="uid://be3yh5mqefut3" path="res://resources/mesh_library/level_props.meshlib" id="2_h7pk1"]
 [ext_resource type="PackedScene" uid="uid://c3hpiq2ftpgt8" path="res://scenes/levels/doors/scene_door.tscn" id="3_x72w2"]
-[ext_resource type="PackedScene" uid="uid://b2sgpfxgwrjy3" path="res://scenes/entities/enemies/clt/clt.tscn" id="4_65s0l"]
+[ext_resource type="PackedScene" uid="uid://b2sgpfxgwrjy3" path="res://scenes/entities/old_enemies/clt/clt.tscn" id="4_65s0l"]
 [ext_resource type="Texture2D" uid="uid://lkeultvpjsj1" path="res://assets/textures/logoda4_dark.svg" id="7_t75u7"]
 [ext_resource type="Environment" uid="uid://c44ylihrd2515" path="res://resources/envoriment/fire_enviroment.tres" id="8_fcye0"]
 [ext_resource type="PackedScene" uid="uid://domk3xwojp1ia" path="res://scenes/components/character/character.tscn" id="9_f573d"]

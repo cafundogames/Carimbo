@@ -75,7 +75,7 @@ func change_state(new_state: PlayerState) -> void:
 	_current_state = new_state
 	if not _current_state or _current_state is not PlayerState:
 		printerr("No state found, reverting...")
-		_current_state = old_state
+		change_state(old_state)
 		return
 	_current_state.enter_state(self)
 

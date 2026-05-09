@@ -1,0 +1,110 @@
+[gd_scene format=3 uid="uid://dw4l3rqouqlum"]
+
+[ext_resource type="Script" uid="uid://bjlq2xvqt2e3x" path="res://scripts/combat/area/hitbox_3d.gd" id="1_tsbgq"]
+[ext_resource type="Script" uid="uid://cb5dev147bfak" path="res://scripts/combat/modifiers/modifier.gd" id="2_rbo10"]
+[ext_resource type="Script" uid="uid://doxdnpadw7ldp" path="res://scripts/combat/attack_data.gd" id="3_uqxgd"]
+[ext_resource type="Texture2D" uid="uid://de5aie68gk0wk" path="res://assets/textures/stamps/símbolo-vermelho.png" id="4_dhlas"]
+[ext_resource type="PackedScene" uid="uid://djwabunt0h667" path="res://scenes/vfx/static/symbols/fire_rune.tscn" id="5_rbo10"]
+
+[sub_resource type="Resource" id="Resource_i5fv1"]
+script = ExtResource("3_uqxgd")
+stamp_texture = ExtResource("4_dhlas")
+stamp_size = Vector2(0.2, 0.2)
+attack_dmg = 3.0
+metadata/_custom_type_script = "uid://doxdnpadw7ldp"
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_drs5a"]
+height = 1.0
+radius = 1.0
+
+[sub_resource type="Animation" id="Animation_uqxgd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FireRune:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FireRune:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_dhlas"]
+resource_name = "default"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FireRune:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.70000005, 1, 1.3000001, 2),
+"transitions": PackedFloat32Array(-2, 0.5, 1, 0.5, -2),
+"update": 0,
+"values": [Vector3(0.05, 0.05, 0.05), Vector3(1.2, 1.2, 1.2), Vector3(1, 1, 1), Vector3(1.2, 1.2, 1.2), Vector3(0.05, 0.05, 0.05)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FireRune:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.70000005, 1, 1.3000001, 2),
+"transitions": PackedFloat32Array(-2, 0.5, 1, 0.5, -2),
+"update": 0,
+"values": [Vector3(0, -6.2831855, 0), Vector3(0, 0.18325958, 0), Vector3(0, 0, 0), Vector3(0, 0.18325958, 0), Vector3(0, -6.2831855, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i5fv1"]
+_data = {
+&"RESET": SubResource("Animation_uqxgd"),
+&"default": SubResource("Animation_dhlas")
+}
+
+[node name="FireStamp" type="Node3D" unique_id=1906699865]
+
+[node name="Hitbox3D" type="Area3D" parent="." unique_id=190335782]
+monitoring = false
+script = ExtResource("1_tsbgq")
+attack_info = SubResource("Resource_i5fv1")
+metadata/_custom_type_script = "uid://bjlq2xvqt2e3x"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox3D" unique_id=718349730]
+shape = SubResource("CylinderShape3D_drs5a")
+
+[node name="FireRune" parent="." unique_id=945686240 instance=ExtResource("5_rbo10")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=912085152]
+libraries/ = SubResource("AnimationLibrary_i5fv1")
+autoplay = &"default"
