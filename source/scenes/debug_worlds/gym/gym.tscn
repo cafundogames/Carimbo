@@ -5,10 +5,8 @@
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="3_87srb"]
 [ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="4_14laj"]
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="5_pmrfe"]
-[ext_resource type="Script" uid="uid://bjlq2xvqt2e3x" path="res://scripts/combat/area/hitbox_3d.gd" id="6_pmrfe"]
+[ext_resource type="PackedScene" uid="uid://bjwd8y56vnx2g" path="res://scenes/objects/obstacles/lava_pool/lava_pool.tscn" id="6_aose2"]
 [ext_resource type="Script" uid="uid://cb5dev147bfak" path="res://scripts/combat/modifiers/modifier.gd" id="7_b00bo"]
-[ext_resource type="Shader" uid="uid://dyytm8ffmovvi" path="res://scenes/vfx/static/lava.gdshader" id="7_jtflr"]
-[ext_resource type="Script" uid="uid://cqodxw2judeok" path="res://scripts/combat/modifiers/poison_modifier.gd" id="8_fp5oc"]
 [ext_resource type="Script" uid="uid://doxdnpadw7ldp" path="res://scripts/combat/attack_data.gd" id="8_ph1s4"]
 [ext_resource type="Texture2D" uid="uid://de5aie68gk0wk" path="res://assets/textures/stamps/símbolo-vermelho.png" id="9_fp5oc"]
 
@@ -33,82 +31,13 @@ volumetric_fog_albedo = Color(0.28478888, 0.07470257, 0.041376807, 1)
 [sub_resource type="Resource" id="Resource_jtflr"]
 script = ExtResource("5_pmrfe")
 
-[sub_resource type="Resource" id="Resource_5pm4g"]
-script = ExtResource("8_fp5oc")
-duration = 3.0
-poison_damage = 0.1
-metadata/_custom_type_script = "uid://cqodxw2judeok"
-
-[sub_resource type="Resource" id="Resource_2dxmu"]
+[sub_resource type="Resource" id="Resource_aose2"]
+resource_local_to_scene = true
 script = ExtResource("8_ph1s4")
 stamp_texture = ExtResource("9_fp5oc")
-stamp_size = Vector2(0.2, 0.2)
-attack_dmg = 0.1
-shield_dmg = 0.1
-mods = Array[ExtResource("7_b00bo")]([SubResource("Resource_5pm4g")])
+attack_dmg = 99.0
+shield_dmg = 99.0
 metadata/_custom_type_script = "uid://doxdnpadw7ldp"
-
-[sub_resource type="Gradient" id="Gradient_2vuqy"]
-offsets = PackedFloat32Array(0.18681319, 0.48351648, 0.67582417, 0.8131868)
-colors = PackedColorArray(0.9, 0.225, 0, 1, 0.9047094, 0.4903581, 5.7756904e-07, 1, 0.85, 0.6853834, 0.14450002, 1, 1, 1, 1, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_hvi84"]
-gradient = SubResource("Gradient_2vuqy")
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_fyvx4"]
-noise_type = 4
-seed = 3
-fractal_type = 2
-fractal_lacunarity = 1.5
-fractal_gain = 0.75
-fractal_weighted_strength = 1.0
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_w76ot"]
-noise = SubResource("FastNoiseLite_fyvx4")
-seamless = true
-seamless_blend_skirt = 0.37
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_5738e"]
-noise_type = 4
-seed = 2
-frequency = 0.005
-fractal_type = 2
-fractal_lacunarity = 1.5
-fractal_gain = 0.75
-fractal_weighted_strength = 1.0
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rfl1x"]
-noise = SubResource("FastNoiseLite_5738e")
-seamless = true
-seamless_blend_skirt = 0.37
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_uaswc"]
-resource_local_to_scene = true
-render_priority = 0
-shader = ExtResource("7_jtflr")
-shader_parameter/displacement_map = SubResource("NoiseTexture2D_w76ot")
-shader_parameter/liquid = SubResource("NoiseTexture2D_rfl1x")
-shader_parameter/color_ramp = SubResource("GradientTexture1D_hvi84")
-shader_parameter/glow_strength = 1.10000001639132
-shader_parameter/glow_oscillation = 0.80000001192096
-shader_parameter/displacement_strength = 0.3999999910592
-shader_parameter/displacement_vector = Vector3(-1, 1, 0)
-shader_parameter/displacement_speed = 0.10000000149012
-shader_parameter/uv_scale = Vector2(1, 2.3)
-shader_parameter/uv_offset = Vector2(1, 1)
-shader_parameter/uv_offset2 = Vector2(1, 0)
-shader_parameter/mix_amount = 0.5999999865888
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_b00bo"]
-resource_local_to_scene = true
-material = SubResource("ShaderMaterial_uaswc")
-size = Vector2(10, 23)
-subdivide_width = 32
-subdivide_depth = 32
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ph1s4"]
-resource_local_to_scene = true
-size = Vector3(10, 1, 23)
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_b00bo"]
 
@@ -163,20 +92,10 @@ align_transform_with_view = Callable()
 align_position_with_view = Callable()
 align_rotation_with_view = Callable()
 
-[node name="LavaPool" type="Area3D" parent="." unique_id=530952515]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.10592556, 0)
-collision_layer = 4
-collision_mask = 0
-monitoring = false
-script = ExtResource("6_pmrfe")
-attack_info = SubResource("Resource_2dxmu")
-metadata/_custom_type_script = "uid://bjlq2xvqt2e3x"
-
-[node name="LavaMesh" type="MeshInstance3D" parent="LavaPool" unique_id=1067949371]
-mesh = SubResource("PlaneMesh_b00bo")
-
-[node name="HitboxCollision" type="CollisionShape3D" parent="LavaPool" unique_id=1094792591]
-shape = SubResource("BoxShape3D_ph1s4")
+[node name="LavaPool" parent="." unique_id=1121838971 instance=ExtResource("6_aose2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, -0.2461257, 0)
+size = Vector2(8, 16)
+attack_info = SubResource("Resource_aose2")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1657695038]
 collision_mask = 0
