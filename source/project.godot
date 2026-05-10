@@ -34,7 +34,7 @@ DialogueManager="*uid://c3rodes2l3gxb"
 MusicPlayer="*uid://u3iwlgfqlbwd"
 SaveSys="*uid://civ124t3mhsfk"
 InputHelper="*uid://cholww48njaeh"
-SceneManager="*uid://j20v4cg7v8m1"
+SceneManager="*uid://qqwbbbaurvfj"
 
 [debug]
 
@@ -56,7 +56,7 @@ window/size/mode.editor_hint=0
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/beehave/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg", "res://addons/input_helper/plugin.cfg", "res://addons/phantom_camera/plugin.cfg", "res://addons/scene_manager/plugin.cfg")
+enabled=PackedStringArray("res://addons/awesome_scene_manager/plugin.cfg", "res://addons/beehave/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg", "res://addons/input_helper/plugin.cfg", "res://addons/phantom_camera/plugin.cfg")
 
 [file_customization]
 
@@ -65,7 +65,7 @@ folder_colors={
 "res://resources/": "purple",
 "res://scenes/": "teal",
 "res://scripts/": "pink",
-"res://scripts/beehave/": "purple"
+"res://scripts/old_beehave/": "purple"
 }
 
 [global_group]
@@ -73,6 +73,7 @@ folder_colors={
 player="The group to grab the player node"
 monster=""
 camera=""
+document="The enemies"
 
 [input]
 
@@ -186,6 +187,11 @@ sub_rune={
 , Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":4,"position":Vector2(175, 10),"global_position":Vector2(182, 47),"factor":1.0,"button_index":3,"canceled":false,"pressed":true,"double_click":false,"script":null)
 ]
 }
+debug={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":47,"key_label":0,"unicode":59,"location":0,"echo":false,"script":null)
+]
+}
 
 [internationalization]
 
@@ -194,11 +200,11 @@ locale/translations_pot_files=PackedStringArray("res://resources/dialog/test.dia
 [layer_names]
 
 3d_physics/layer_1="world_collision"
-3d_physics/layer_2="player_hitbox"
-3d_physics/layer_3="enemy_hitbox"
-3d_physics/layer_4="player_collision"
-3d_physics/layer_5="enemy_collision"
-3d_physics/layer_6="falling_object"
+3d_physics/layer_2="player_collision"
+3d_physics/layer_3="enemy_collision"
+3d_physics/layer_4="world_attack_hitbox"
+3d_physics/layer_5="player_attack_hitbox"
+3d_physics/layer_6="enemy_attack_hitbox"
 
 [physics]
 
