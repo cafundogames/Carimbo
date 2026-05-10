@@ -65,6 +65,7 @@ folder_colors={
 "res://resources/": "purple",
 "res://scenes/": "teal",
 "res://scripts/": "pink",
+"res://scripts/beehave/": "purple",
 "res://scripts/old_beehave/": "purple"
 }
 

@@ -6,6 +6,7 @@ extends CharacterBody3D
 	set(v):
 		stampable_sprite = v
 		notify_property_list_changed()
+@export var shield_data: ShieldData
 @export var movement_speed: float = 10.0
 @export var death_on_y: float = -20.0
 @export_group("Animations", "animation_")

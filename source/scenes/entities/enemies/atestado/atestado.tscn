@@ -15,7 +15,10 @@
 [ext_resource type="Script" uid="uid://cwcntjydr6hw2" path="res://scenes/entities/enemies/enemy_state_machine/states/beehave_state.gd" id="11_nbbw7"]
 [ext_resource type="Script" uid="uid://bb0t2ovl7wifo" path="res://addons/beehave/nodes/beehave_tree.gd" id="11_xbktm"]
 [ext_resource type="Script" uid="uid://oa7xd24pvby4" path="res://scenes/entities/enemies/enemy_state_machine/states/hit_state.gd" id="13_cxioh"]
-[ext_resource type="Script" uid="uid://cv74jjdrwevpr" path="res://addons/beehave/nodes/leaves/action.gd" id="15_8juln"]
+[ext_resource type="Script" uid="uid://cg016dbe7gs1x" path="res://addons/beehave/nodes/composites/sequence.gd" id="16_lpg32"]
+[ext_resource type="Script" uid="uid://dviswpb30vjsb" path="res://scripts/beehave/leaf/action/get_closest_node_position.gd" id="17_nbitu"]
+[ext_resource type="Script" uid="uid://njos5rqw1exr" path="res://scripts/beehave/leaf/action/heal_docs_shield.gd" id="19_86c13"]
+[ext_resource type="Script" uid="uid://dj83ff8qq3750" path="res://scripts/beehave/leaf/action/play_animation.gd" id="19_nbitu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x3nh7"]
 atlas = ExtResource("3_xbbmi")
@@ -133,7 +136,7 @@ height = 1.5889893
 radius = 0.53808594
 height = 1.6794434
 
-[node name="Atestado" type="CharacterBody3D" unique_id=1645928961 node_paths=PackedStringArray("stampable_sprite", "state_beehave", "state_dead", "state_hit")]
+[node name="Atestado" type="CharacterBody3D" unique_id=1645928961 node_paths=PackedStringArray("stampable_sprite", "state_beehave", "state_dead", "state_hit") groups=["document"]]
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("1_w10su")
@@ -226,9 +229,29 @@ blackboard = NodePath("../Blackboard")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://bb0t2ovl7wifo"
 
-[node name="ActionLeaf" type="Node" parent="BeehaveTree" unique_id=593409226]
-script = ExtResource("15_8juln")
-metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+[node name="SequenceComposite" type="Node" parent="BeehaveTree" unique_id=1016171863]
+script = ExtResource("16_lpg32")
+metadata/_custom_type_script = "uid://cg016dbe7gs1x"
+
+[node name="GetClosestDoc" type="Node" parent="BeehaveTree/SequenceComposite" unique_id=1904989430]
+script = ExtResource("17_nbitu")
+max_scan_range = 20.0
+metadata/_custom_type_script = "uid://dviswpb30vjsb"
+
+[node name="SequenceComposite" type="Node" parent="BeehaveTree/SequenceComposite" unique_id=1966677797]
+script = ExtResource("16_lpg32")
+metadata/_custom_type_script = "uid://cg016dbe7gs1x"
+
+[node name="PlayBuffAnimation" type="Node" parent="BeehaveTree/SequenceComposite/SequenceComposite" unique_id=1849784044 node_paths=PackedStringArray("animation_sprite")]
+script = ExtResource("19_nbitu")
+animation_type = 0
+animation_sprite = NodePath("../../../../ShadedAnimatedSprite3D")
+animation_name = &"buff"
+metadata/_custom_type_script = "uid://dj83ff8qq3750"
+
+[node name="HealDocsShield" type="Node" parent="BeehaveTree/SequenceComposite/SequenceComposite" unique_id=807070145]
+script = ExtResource("19_86c13")
+metadata/_custom_type_script = "uid://njos5rqw1exr"
 
 [connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_velocity_computed"]
 [connection signal="success_hit" from="Hurtbox3D" to="HealthData" method="on_success_hit"]
