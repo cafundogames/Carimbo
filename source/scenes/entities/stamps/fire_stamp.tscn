@@ -9,7 +9,6 @@
 [sub_resource type="Resource" id="Resource_i5fv1"]
 script = ExtResource("3_uqxgd")
 stamp_texture = ExtResource("4_dhlas")
-stamp_size = Vector2(0.2, 0.2)
 attack_dmg = 3.0
 metadata/_custom_type_script = "uid://doxdnpadw7ldp"
 
@@ -95,6 +94,8 @@ _data = {
 [node name="FireStamp" type="Node3D" unique_id=1906699865]
 
 [node name="Hitbox3D" type="Area3D" parent="." unique_id=190335782]
+collision_layer = 16
+collision_mask = 0
 monitoring = false
 script = ExtResource("1_tsbgq")
 attack_info = SubResource("Resource_i5fv1")

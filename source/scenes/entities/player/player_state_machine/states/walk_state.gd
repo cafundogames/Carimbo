@@ -23,7 +23,5 @@ func handle_physics_process(_delta: float) -> void:
 		)
 	if Input.is_action_pressed(&"roll"):
 		player.change_state(player.state_roll)
-	# TODO: when runes are available, use its info to select between melee or ranged
-	var new_attack: PlayerState = player.state_attack_melee
 	if Input.is_action_pressed(&"hit"):
-		player.change_state(new_attack)
+		player.change_state(player.state_attack)

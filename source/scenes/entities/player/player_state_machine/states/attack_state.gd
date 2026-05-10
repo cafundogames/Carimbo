@@ -1,0 +1,58 @@
+class_name PlayerAttackState
+extends PlayerState
+
+const COMMON_STAMP = preload("uid://cxewxkqw1lx35")
+
+@export var noise_emitter: PhantomCameraNoiseEmitter3D
+@export var audio_player: AudioStreamPlayer
+
+var hit_cooldown: float = 0.5
+var _time_left: float
+
+
+func enter_state(player_node: PlayerCharacterBody3D) -> void:
+	super(player_node)
+	var curr_stamp: StampData = player.current_stamp if player.current_stamp else COMMON_STAMP
+	hit_cooldown = curr_stamp.stamp_cooldown
+	_time_left = hit_cooldown
+	player.velocity = player.velocity.move_toward(Vector3.DOWN * player.velocity.y, 0.9)
+	player.stampable_sprite.stop()
+	var animation: StringName
+	match curr_stamp.stamp_type:
+		curr_stamp.StampAttackType.MELEE:
+			animation = player.animation_attk
+		curr_stamp.StampAttackType.RANGED:
+			animation = player.animation_fire
+	player.stampable_sprite.play(animation)
+	_spawn_stamp(curr_stamp.stamp_scene)
+	if audio_player:
+		audio_player.play()
+
+
+func exit_state() -> void:
+	if player.stampable_sprite.animation_finished.is_connected(player.change_state):
+		player.stampable_sprite.animation_finished.disconnect(player.change_state)
+
+
+func handle_physics_process(delta: float) -> void:
+	player.velocity = player.velocity.move_toward(Vector3.DOWN * player.velocity.y, delta * 20.0)
+	if _time_left < (hit_cooldown / 2.0) and noise_emitter:
+		noise_emitter.emit()
+	if _time_left > 0.0:
+		_time_left -= delta
+	elif Input.is_action_pressed(&"hit"):
+		player.change_state(self)
+
+	if Input.is_action_pressed(&"roll"):
+		player.change_state(player.state_roll)
+	if not player.stampable_sprite.is_playing():
+		player.change_state(player.state_idle)
+
+
+func _spawn_stamp(stamp_scene: PackedScene) -> void:
+	var stamp: Node3D = stamp_scene.instantiate()
+	add_child(stamp)
+	stamp.look_at_from_position(
+		player.global_position,
+		player.global_position + Vector3(player.input_dir.x, 0.0, player.input_dir.y),
+	)

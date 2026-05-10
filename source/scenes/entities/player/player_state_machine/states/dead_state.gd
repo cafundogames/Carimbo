@@ -1,6 +1,7 @@
 class_name PlayerDeadState
 extends PlayerState
 
+@export var debug: bool = false
 @export var death_sound: AudioStream
 @export var stream_player: AudioStreamPlayer
 
@@ -23,3 +24,7 @@ func enter_state(player_node: PlayerCharacterBody3D) -> void:
 	player.stampable_sprite.play(player.animation_death_loop)
 	await player.stampable_sprite.animation_looped
 	player.stampable_sprite.trigger_burn_fx()
+	player.stampable_sprite.burned.connect(
+		SceneManager.change_scene.bind("uid://jfpt6rom242n", SceneManager.Transitions.LOGO_SLIDE),
+		CONNECT_ONE_SHOT,
+	)

@@ -68,6 +68,11 @@ func _on_health_data_dead() -> void:
 	change_state(state_dead)
 
 
+func _on_health_data_success_hit(attack_info: AttackData) -> void:
+	change_state(state_hit)
+	stampable_sprite.stamp(attack_info.stamp_texture, attack_info.stamp_size)
+
+
 func _on_sprite_burned() -> void:
 	# TODO: add maybe a signal (bus?) for levels to detect when an enemy died
 	queue_free()

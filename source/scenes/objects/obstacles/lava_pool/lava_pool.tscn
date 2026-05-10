@@ -77,8 +77,9 @@ resource_local_to_scene = true
 size = Vector3(8, 1, 8)
 
 [node name="LavaPool" type="Area3D" unique_id=1150751571 node_paths=PackedStringArray("lava_mesh", "hitbox_collision")]
-collision_layer = 4
+collision_layer = 8
 collision_mask = 0
+input_ray_pickable = false
 monitoring = false
 script = ExtResource("1_2rnx8")
 size = Vector2(8, 8)

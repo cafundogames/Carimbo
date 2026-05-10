@@ -23,11 +23,12 @@ extends CharacterBody3D
 @export var state_dead: PlayerState
 @export var state_roll: PlayerState
 @export var state_hit: PlayerState
-@export_subgroup("Attack", "state_attack_")
-@export var state_attack_melee: PlayerState
-@export var state_attack_ranged: PlayerState
+@export var state_attack: PlayerState
 
 var input_dir: Vector2 = Vector2.RIGHT
+var stamps: Array[StampData] = []
+var alt_stamps: Array[StampData] = []
+var current_stamp: StampData
 var _current_state: PlayerState
 
 

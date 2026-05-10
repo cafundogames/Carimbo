@@ -23,7 +23,7 @@
 [ext_resource type="Script" uid="uid://c8ukgaej5g33g" path="res://scenes/entities/player/player_state_machine/states/dead_state.gd" id="21_fg2wu"]
 [ext_resource type="Script" uid="uid://cbjitg71due4f" path="res://scenes/entities/player/player_state_machine/states/roll_state.gd" id="22_7dqom"]
 [ext_resource type="Script" uid="uid://bkg6lot0o3k5w" path="res://scenes/entities/player/player_state_machine/states/hit_state.gd" id="23_go8vc"]
-[ext_resource type="Script" uid="uid://f6ome3hwfrw6" path="res://scenes/entities/player/player_state_machine/states/melee_attack_state.gd" id="24_wghkl"]
+[ext_resource type="Script" uid="uid://cvw04i7l4hpaj" path="res://scenes/entities/player/player_state_machine/states/attack_state.gd" id="24_6u2ft"]
 [ext_resource type="Script" uid="uid://ccmiitq0sdh7j" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_noise_emitter_3d.gd" id="25_vs62q"]
 [ext_resource type="PackedScene" uid="uid://dhjt3y011u5hl" path="res://scenes/ui/player_interface.tscn" id="25_yk2xr"]
 [ext_resource type="Script" uid="uid://cuffvge5ad4aa" path="res://addons/phantom_camera/scripts/resources/phantom_camera_noise_3d.gd" id="26_qko2e"]
@@ -33,7 +33,7 @@
 atlas = ExtResource("6_70kwc")
 region = Rect2(2304, 0, 256, 256)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_r4dfn"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_6u2ft"]
 viewport_path = NodePath("ShadedAnimatedSprite3D/SubViewport")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ovg4i"]
@@ -47,7 +47,7 @@ shader_parameter/texture_normal = ExtResource("3_bj7e2")
 shader_parameter/normal_scale = 1.5600008340999985
 shader_parameter/albedo = Color(1, 1, 1, 1)
 shader_parameter/texture_albedo = SubResource("AtlasTexture_80i3n")
-shader_parameter/texture_carimbo = SubResource("ViewportTexture_r4dfn")
+shader_parameter/texture_carimbo = SubResource("ViewportTexture_6u2ft")
 shader_parameter/carimbo_glow_intensity = 0.0
 shader_parameter/burn_texture = ExtResource("2_8akj5")
 shader_parameter/burn_amount = 0.0
@@ -564,8 +564,8 @@ rotational_multiplier_y = 0.5
 rotational_multiplier_z = 0.5
 metadata/_custom_type_script = "uid://cuffvge5ad4aa"
 
-[node name="Player" type="CharacterBody3D" unique_id=237217294 node_paths=PackedStringArray("stampable_sprite", "state_idle", "state_walk", "state_dead", "state_roll", "state_hit", "state_attack_melee")]
-collision_layer = 8
+[node name="Player" type="CharacterBody3D" unique_id=237217294 node_paths=PackedStringArray("stampable_sprite", "state_idle", "state_walk", "state_dead", "state_roll", "state_hit", "state_attack")]
+collision_layer = 2
 script = ExtResource("1_w3p2j")
 stampable_sprite = NodePath("ShadedAnimatedSprite3D")
 animation_death_start = &"death"
@@ -581,7 +581,7 @@ state_walk = NodePath("States/PlayerWalkState")
 state_dead = NodePath("States/PlayerDeadState")
 state_roll = NodePath("States/PlayerRollState")
 state_hit = NodePath("States/PlayerHitState")
-state_attack_melee = NodePath("States/PlayerMeleeAttackState")
+state_attack = NodePath("States/PlayerAttackState")
 metadata/_custom_type_script = "uid://c7u4g2ppur0xh"
 
 [node name="ShadedAnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=828992761 node_paths=PackedStringArray("audio_player", "stamp_viewport")]
@@ -594,6 +594,7 @@ autoplay = "idle"
 script = ExtResource("5_5sj0x")
 audio_player = NodePath("@AudioStreamPlayer@19815")
 stamp_viewport = NodePath("SubViewport")
+stamp_viewport_texture = SubResource("ViewportTexture_6u2ft")
 metadata/_custom_type_script = "uid://ctmgj3s2w7dsb"
 
 [node name="SubViewport" type="SubViewport" parent="ShadedAnimatedSprite3D" unique_id=184403165]
@@ -609,7 +610,8 @@ shape = SubResource("CapsuleShape3D_yywfu")
 
 [node name="Hurtbox3D" type="Area3D" parent="." unique_id=769131646 node_paths=PackedStringArray("actor")]
 collision_layer = 0
-collision_mask = 4
+collision_mask = 40
+input_ray_pickable = false
 monitorable = false
 script = ExtResource("15_70kwc")
 actor = NodePath("..")
@@ -650,6 +652,8 @@ bus = &"Sounds"
 
 [node name="PlayerRollState" type="Node" parent="States" unique_id=1793865176 node_paths=PackedStringArray("hurtbox")]
 script = ExtResource("22_7dqom")
+roll_amount = 20.0
+roll_time = 0.2
 hurtbox = NodePath("../../Hurtbox3D")
 metadata/_custom_type_script = "uid://cbjitg71due4f"
 
@@ -664,19 +668,19 @@ stream = ExtResource("14_7dqom")
 volume_db = 0.2
 bus = &"Sounds"
 
-[node name="PlayerMeleeAttackState" type="Node" parent="States" unique_id=1720064375 node_paths=PackedStringArray("noise_emitter", "audio_player")]
-script = ExtResource("24_wghkl")
+[node name="PlayerAttackState" type="Node" parent="States" unique_id=766066094 node_paths=PackedStringArray("noise_emitter", "audio_player")]
+script = ExtResource("24_6u2ft")
 noise_emitter = NodePath("AttackNoise")
 audio_player = NodePath("HitSound")
-metadata/_custom_type_script = "uid://f6ome3hwfrw6"
+metadata/_custom_type_script = "uid://cvw04i7l4hpaj"
 
-[node name="AttackNoise" type="Node3D" parent="States/PlayerMeleeAttackState" unique_id=1060758920]
+[node name="AttackNoise" type="Node3D" parent="States/PlayerAttackState" unique_id=1060758920]
 script = ExtResource("25_vs62q")
 noise = SubResource("Resource_qko2e")
 duration = 0.3
 metadata/_custom_type_script = "uid://ccmiitq0sdh7j"
 
-[node name="HitSound" type="AudioStreamPlayer" parent="States/PlayerMeleeAttackState" unique_id=1506209330]
+[node name="HitSound" type="AudioStreamPlayer" parent="States/PlayerAttackState" unique_id=1506209330]
 stream = ExtResource("27_6u2ft")
 
 [node name="PlayerInterface" parent="." unique_id=1667225147 instance=ExtResource("25_yk2xr")]

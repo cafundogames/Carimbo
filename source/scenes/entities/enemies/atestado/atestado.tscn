@@ -14,6 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://b8ejg8s8ue10q" path="res://assets/sounds/paper_tear1.mp3" id="11_8juln"]
 [ext_resource type="Script" uid="uid://cwcntjydr6hw2" path="res://scenes/entities/enemies/enemy_state_machine/states/beehave_state.gd" id="11_nbbw7"]
 [ext_resource type="Script" uid="uid://bb0t2ovl7wifo" path="res://addons/beehave/nodes/beehave_tree.gd" id="11_xbktm"]
+[ext_resource type="Script" uid="uid://oa7xd24pvby4" path="res://scenes/entities/enemies/enemy_state_machine/states/hit_state.gd" id="13_cxioh"]
 [ext_resource type="Script" uid="uid://cv74jjdrwevpr" path="res://addons/beehave/nodes/leaves/action.gd" id="15_8juln"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x3nh7"]
@@ -125,13 +126,16 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xbbmi"]
-radius = 0.3564453
-height = 1.4628906
+radius = 0.37060547
+height = 1.5889893
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mykyc"]
-height = 1.6489258
+radius = 0.53808594
+height = 1.6794434
 
-[node name="Atestado" type="CharacterBody3D" unique_id=1645928961 node_paths=PackedStringArray("stampable_sprite")]
+[node name="Atestado" type="CharacterBody3D" unique_id=1645928961 node_paths=PackedStringArray("stampable_sprite", "state_beehave", "state_dead", "state_hit")]
+collision_layer = 4
+collision_mask = 7
 script = ExtResource("1_w10su")
 stampable_sprite = NodePath("ShadedAnimatedSprite3D")
 animation_idle = &"idle"
@@ -139,6 +143,9 @@ animation_walk = &"walk"
 animation_attk = &"buff"
 animation_hit = &"hit"
 animation_death = &"death"
+state_beehave = NodePath("States/EnemyBeehaveState")
+state_dead = NodePath("States/EnemyDeadState")
+state_hit = NodePath("States/EnemyHitState")
 metadata/_custom_type_script = "uid://bj50l06kkgkyj"
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1510166990]
@@ -153,7 +160,7 @@ sprite_frames = SubResource("SpriteFrames_1hsg8")
 animation = &"idle"
 autoplay = "idle"
 script = ExtResource("6_jlmt8")
-audio_player = NodePath("@AudioStreamPlayer@37835")
+audio_player = NodePath("@AudioStreamPlayer@19846")
 stamp_viewport = NodePath("SubViewport")
 stamp_viewport_texture = SubResource("ViewportTexture_8juln")
 metadata/_custom_type_script = "uid://ctmgj3s2w7dsb"
@@ -166,16 +173,20 @@ render_target_clear_mode = 2
 render_target_update_mode = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=339554927]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.72753906, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.56073, 0)
 shape = SubResource("CapsuleShape3D_xbbmi")
 
 [node name="Hurtbox3D" type="Area3D" parent="." unique_id=855732650 node_paths=PackedStringArray("actor")]
+collision_layer = 0
+collision_mask = 24
+input_ray_pickable = false
+monitorable = false
 script = ExtResource("7_mykyc")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://bmgcj6fweob2m"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox3D" unique_id=1148502430]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.56698996, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55173117, 0)
 shape = SubResource("CapsuleShape3D_mykyc")
 
 [node name="HealthData" type="Node" parent="." unique_id=1099764634]
@@ -199,6 +210,10 @@ script = ExtResource("11_nbbw7")
 beehave_tree = NodePath("../../BeehaveTree")
 metadata/_custom_type_script = "uid://cwcntjydr6hw2"
 
+[node name="EnemyHitState" type="Node" parent="States" unique_id=1909476797]
+script = ExtResource("13_cxioh")
+metadata/_custom_type_script = "uid://oa7xd24pvby4"
+
 [node name="Blackboard" type="Node" parent="." unique_id=1558716360]
 script = ExtResource("10_jlmt8")
 metadata/_custom_type_script = "uid://dme5f24l0edsf"
@@ -218,3 +233,4 @@ metadata/_custom_type_script = "uid://cv74jjdrwevpr"
 [connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_velocity_computed"]
 [connection signal="success_hit" from="Hurtbox3D" to="HealthData" method="on_success_hit"]
 [connection signal="dead" from="HealthData" to="." method="_on_health_data_dead"]
+[connection signal="success_hit" from="HealthData" to="." method="_on_health_data_success_hit"]
