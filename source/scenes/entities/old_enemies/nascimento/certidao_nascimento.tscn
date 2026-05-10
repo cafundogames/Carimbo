@@ -17,8 +17,8 @@
 [ext_resource type="Script" uid="uid://c15vrenp7llbg" path="res://scripts/debug/debug_label.gd" id="10_lbcd4"]
 [ext_resource type="Script" uid="uid://cg016dbe7gs1x" path="res://addons/beehave/nodes/composites/sequence.gd" id="11_duv7f"]
 [ext_resource type="Script" uid="uid://dorri1tul8gfx" path="res://addons/beehave/nodes/decorators/delayer.gd" id="13_lbcd4"]
-[ext_resource type="Script" uid="uid://vfqqt15t76vb" path="res://scripts/beehave/leaf/action/evolve_action.gd" id="14_duv7f"]
-[ext_resource type="Script" uid="uid://docm6x45208x4" path="res://scripts/beehave/leaf/action/play_particle_action.gd" id="16_g2kvs"]
+[ext_resource type="Script" uid="uid://vfqqt15t76vb" path="res://scripts/old_beehave/leaf/action/evolve_action.gd" id="14_duv7f"]
+[ext_resource type="Script" uid="uid://docm6x45208x4" path="res://scripts/old_beehave/leaf/action/play_particle_action.gd" id="16_g2kvs"]
 [ext_resource type="PackedScene" uid="uid://68uyk4amv4a6" path="res://scenes/vfx/particles/puff.tscn" id="17_idvk1"]
 [ext_resource type="PackedScene" uid="uid://xw64ux4jg7fg" path="res://scenes/entities/old_enemies/errige/errige.tscn" id="18_lbcd4"]
 
