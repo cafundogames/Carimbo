@@ -3,15 +3,14 @@
 [ext_resource type="Script" uid="uid://c3ok7vgj5rs6i" path="res://scenes/objects/obstacles/lava_pool/lava_pool.gd" id="1_2rnx8"]
 [ext_resource type="Script" uid="uid://cb5dev147bfak" path="res://scripts/combat/modifiers/modifier.gd" id="2_jvf55"]
 [ext_resource type="Script" uid="uid://doxdnpadw7ldp" path="res://scripts/combat/attack_data.gd" id="3_gyf2b"]
-[ext_resource type="Texture2D" uid="uid://de5aie68gk0wk" path="res://assets/textures/stamps/símbolo-vermelho.png" id="4_lm5ja"]
+[ext_resource type="Texture2D" uid="uid://bymhvxidkm43d" path="res://resources/gambiarra_trans.tres" id="4_1607k"]
 [ext_resource type="Shader" uid="uid://dyytm8ffmovvi" path="res://scenes/vfx/static/lava.gdshader" id="5_kp4c2"]
 
 [sub_resource type="Resource" id="Resource_2dxmu"]
-resource_local_to_scene = true
 script = ExtResource("3_gyf2b")
-stamp_texture = ExtResource("4_lm5ja")
-attack_dmg = 99.0
-shield_dmg = 99.0
+stamp_texture = ExtResource("4_1607k")
+attack_dmg = 999.0
+shield_dmg = 999.0
 metadata/_custom_type_script = "uid://doxdnpadw7ldp"
 
 [sub_resource type="Gradient" id="Gradient_2vuqy"]
