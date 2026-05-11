@@ -27,6 +27,7 @@ var _current_state: EnemyState
 func _ready() -> void:
 	if not stampable_sprite:
 		stampable_sprite = get_node_or_null(^"%ShadedAnimatedSprite3D")
+	change_state(state_beehave)
 
 
 func _physics_process(delta: float) -> void:

@@ -109,3 +109,6 @@ shape = SubResource("WorldBoundaryShape3D_b00bo")
 
 [node name="Atestado" parent="." unique_id=1645928961 instance=ExtResource("10_vup72")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.976922, 3.7121758, 0.5676203)
+
+[node name="Atestado2" parent="." unique_id=741936077 instance=ExtResource("10_vup72")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.188963, 3.7121758, -6.3805213)

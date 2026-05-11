@@ -1,5 +1,5 @@
 @tool
-class_name GetClosestNodePosition
+class_name GetClosestNodeInGroup
 extends ActionLeaf
 
 @export var blackboard_key: StringName = "target"
@@ -9,7 +9,10 @@ extends ActionLeaf
 
 func tick(actor: Node, blackboard: Blackboard) -> int:
 	var nodes: Array[Node3D]
-	nodes.assign(get_tree().get_nodes_in_group(node_group_name).filter(func(n): return n is Node3D))
+	var filtered = get_tree().get_nodes_in_group(node_group_name)\
+		.filter(func(n): return n is Node3D)
+	nodes.assign(filtered)
+
 	var distance: float = max_scan_range
 	var found: Node3D = null
 

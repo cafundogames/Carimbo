@@ -11,5 +11,7 @@ func tick(_actor: Node, blackboard: Blackboard) -> int:
 	if not node or node is not EnemyCharacterBody3D:
 		return FAILURE
 	var document: EnemyCharacterBody3D = node
+	if document.shield_data == null:
+		return FAILURE
 	document.shield_data.heal(heal_amount)
 	return SUCCESS

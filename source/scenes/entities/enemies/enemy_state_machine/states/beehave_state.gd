@@ -13,6 +13,7 @@ func _ready() -> void:
 func enter_state(actor: EnemyCharacterBody3D) -> void:
 	super(actor)
 	assert(beehave_tree != null, "MISSING BEEHAVE TREE")
+	body.stampable_sprite.play(body.animation_idle)
 	beehave_tree.enable()
 
 

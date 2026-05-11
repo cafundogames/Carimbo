@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dkbujjnpxwia0" path="res://assets/textures/paper/Paper003_1K-JPG_Roughness.jpg" id="5_63toy"]
 [ext_resource type="Script" uid="uid://ctmgj3s2w7dsb" path="res://scenes/components/stamped_animated_sprite/shaded_animated_sprite_3d.gd" id="6_jlmt8"]
 [ext_resource type="Script" uid="uid://bmgcj6fweob2m" path="res://scripts/combat/area/hurtbox_3d.gd" id="7_mykyc"]
+[ext_resource type="AudioStream" uid="uid://dfe4v2sdvd1bd" path="res://assets/sounds/burn_sfx.mp3" id="8_8bkgb"]
 [ext_resource type="Script" uid="uid://dganhrqw3fv7u" path="res://scripts/combat/health_data.gd" id="8_w10su"]
 [ext_resource type="Script" uid="uid://bsjqacgoagglr" path="res://scenes/entities/enemies/enemy_state_machine/states/dead_state.gd" id="10_1hsg8"]
 [ext_resource type="Script" uid="uid://dme5f24l0edsf" path="res://addons/beehave/blackboard.gd" id="10_jlmt8"]
@@ -15,7 +16,9 @@
 [ext_resource type="Script" uid="uid://cwcntjydr6hw2" path="res://scenes/entities/enemies/enemy_state_machine/states/beehave_state.gd" id="11_nbbw7"]
 [ext_resource type="Script" uid="uid://bb0t2ovl7wifo" path="res://addons/beehave/nodes/beehave_tree.gd" id="11_xbktm"]
 [ext_resource type="Script" uid="uid://oa7xd24pvby4" path="res://scenes/entities/enemies/enemy_state_machine/states/hit_state.gd" id="13_cxioh"]
+[ext_resource type="Script" uid="uid://8hn4kne15ac5" path="res://addons/beehave/nodes/composites/selector.gd" id="16_8bkgb"]
 [ext_resource type="Script" uid="uid://cg016dbe7gs1x" path="res://addons/beehave/nodes/composites/sequence.gd" id="16_lpg32"]
+[ext_resource type="Script" uid="uid://we22430vcb44" path="res://addons/beehave/nodes/decorators/time_limiter.gd" id="17_8bkgb"]
 [ext_resource type="Script" uid="uid://dviswpb30vjsb" path="res://scripts/beehave/leaf/action/get_closest_node_position.gd" id="17_nbitu"]
 [ext_resource type="Script" uid="uid://njos5rqw1exr" path="res://scripts/beehave/leaf/action/heal_docs_shield.gd" id="19_86c13"]
 [ext_resource type="Script" uid="uid://dj83ff8qq3750" path="res://scripts/beehave/leaf/action/play_animation.gd" id="19_nbitu"]
@@ -84,6 +87,27 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_rccfi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bsla6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rccfi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bsla6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rccfi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bsla6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rccfi")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_bsla6")
 }],
 "loop": false,
 "name": &"buff",
@@ -162,11 +186,15 @@ billboard = 1
 sprite_frames = SubResource("SpriteFrames_1hsg8")
 animation = &"idle"
 autoplay = "idle"
+frame_progress = 0.24921387
 script = ExtResource("6_jlmt8")
-audio_player = NodePath("@AudioStreamPlayer@19846")
+audio_player = NodePath("BurnSFX")
 stamp_viewport = NodePath("SubViewport")
 stamp_viewport_texture = SubResource("ViewportTexture_8juln")
 metadata/_custom_type_script = "uid://ctmgj3s2w7dsb"
+
+[node name="BurnSFX" type="AudioStreamPlayer" parent="ShadedAnimatedSprite3D" unique_id=1310214322]
+stream = ExtResource("8_8bkgb")
 
 [node name="SubViewport" type="SubViewport" parent="ShadedAnimatedSprite3D" unique_id=1609538949]
 disable_3d = true
@@ -229,27 +257,37 @@ blackboard = NodePath("../Blackboard")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://bb0t2ovl7wifo"
 
-[node name="SequenceComposite" type="Node" parent="BeehaveTree" unique_id=1016171863]
+[node name="Main" type="Node" parent="BeehaveTree" unique_id=881537514]
+script = ExtResource("16_8bkgb")
+metadata/_custom_type_script = "uid://8hn4kne15ac5"
+
+[node name="TimeLimiterDecorator" type="Node" parent="BeehaveTree/Main" unique_id=1266617610]
+script = ExtResource("17_8bkgb")
+wait_time = 10.0
+metadata/_custom_type_script = "uid://we22430vcb44"
+
+[node name="PlayIdleAnimation" type="Node" parent="BeehaveTree/Main/TimeLimiterDecorator" unique_id=1895576944 node_paths=PackedStringArray("animation_sprite")]
+script = ExtResource("19_nbitu")
+animation_sprite = NodePath("../../../../ShadedAnimatedSprite3D")
+animation_name = &"idle"
+metadata/_custom_type_script = "uid://dj83ff8qq3750"
+
+[node name="BuffADocument" type="Node" parent="BeehaveTree/Main" unique_id=1966677797]
 script = ExtResource("16_lpg32")
 metadata/_custom_type_script = "uid://cg016dbe7gs1x"
 
-[node name="GetClosestDoc" type="Node" parent="BeehaveTree/SequenceComposite" unique_id=1904989430]
+[node name="GetClosestDoc" type="Node" parent="BeehaveTree/Main/BuffADocument" unique_id=1904989430]
 script = ExtResource("17_nbitu")
 max_scan_range = 20.0
 metadata/_custom_type_script = "uid://dviswpb30vjsb"
 
-[node name="SequenceComposite" type="Node" parent="BeehaveTree/SequenceComposite" unique_id=1966677797]
-script = ExtResource("16_lpg32")
-metadata/_custom_type_script = "uid://cg016dbe7gs1x"
-
-[node name="PlayBuffAnimation" type="Node" parent="BeehaveTree/SequenceComposite/SequenceComposite" unique_id=1849784044 node_paths=PackedStringArray("animation_sprite")]
+[node name="PlayBuffAnimation" type="Node" parent="BeehaveTree/Main/BuffADocument" unique_id=1849784044 node_paths=PackedStringArray("animation_sprite")]
 script = ExtResource("19_nbitu")
-animation_type = 0
 animation_sprite = NodePath("../../../../ShadedAnimatedSprite3D")
 animation_name = &"buff"
 metadata/_custom_type_script = "uid://dj83ff8qq3750"
 
-[node name="HealDocsShield" type="Node" parent="BeehaveTree/SequenceComposite/SequenceComposite" unique_id=807070145]
+[node name="HealDocsShield" type="Node" parent="BeehaveTree/Main/BuffADocument" unique_id=807070145]
 script = ExtResource("19_86c13")
 metadata/_custom_type_script = "uid://njos5rqw1exr"
 
