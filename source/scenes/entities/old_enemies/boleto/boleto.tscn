@@ -10,7 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://dfe4v2sdvd1bd" path="res://assets/sounds/burn_sfx.mp3" id="8_o5jln"]
 [ext_resource type="Script" uid="uid://cqxuelwl2k4bg" path="res://scripts/attack_system/stats_component.gd" id="8_yp07s"]
 [ext_resource type="Script" uid="uid://baffaklkbk27f" path="res://scripts/attack_system/hitbox_component.gd" id="9_2a0nr"]
-[ext_resource type="AudioStream" uid="uid://b8ejg8s8ue10q" path="res://assets/sounds/paper_tear1.mp3" id="9_xnw1q"]
+[ext_resource type="AudioStream" uid="uid://b8ejg8s8ue10q" path="res://assets/sounds/paper_tear.mp3" id="9_xnw1q"]
 [ext_resource type="PackedScene" uid="uid://cd1b6a08kepn4" path="res://scenes/vfx/shields.tscn" id="11_4wer4"]
 [ext_resource type="Script" uid="uid://c15vrenp7llbg" path="res://scripts/debug/debug_label.gd" id="11_qjr6i"]
 [ext_resource type="Script" uid="uid://c6tbcxlt1e2hy" path="res://scripts/components/move_component.gd" id="11_uqqi4"]

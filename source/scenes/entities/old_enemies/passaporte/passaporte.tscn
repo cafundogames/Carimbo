@@ -14,7 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://bjxerb7gpyfc" path="res://assets/textures/enemies/passaporte/passaporte.png" id="6_r3rdc"]
 [ext_resource type="Script" uid="uid://bb0t2ovl7wifo" path="res://addons/beehave/nodes/beehave_tree.gd" id="7_3c1s0"]
 [ext_resource type="AudioStream" uid="uid://dfe4v2sdvd1bd" path="res://assets/sounds/burn_sfx.mp3" id="8_qsvuf"]
-[ext_resource type="AudioStream" uid="uid://b8ejg8s8ue10q" path="res://assets/sounds/paper_tear1.mp3" id="9_nvx1e"]
+[ext_resource type="AudioStream" uid="uid://b8ejg8s8ue10q" path="res://assets/sounds/paper_tear.mp3" id="9_nvx1e"]
 [ext_resource type="PackedScene" uid="uid://cd1b6a08kepn4" path="res://scenes/vfx/shields.tscn" id="10_ixgbq"]
 [ext_resource type="Script" uid="uid://cw22yurt5l74k" path="res://addons/beehave/nodes/composites/selector_reactive.gd" id="14_0c8vc"]
 [ext_resource type="Script" uid="uid://8hn4kne15ac5" path="res://addons/beehave/nodes/composites/selector.gd" id="14_w2uf8"]
