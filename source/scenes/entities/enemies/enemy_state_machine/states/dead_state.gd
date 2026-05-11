@@ -22,9 +22,10 @@ func enter_state(actor: EnemyCharacterBody3D) -> void:
 		body.stampable_sprite.trigger_burn_fx,
 		CONNECT_ONE_SHOT,
 	)
-	body.stampable_sprite.burned.connect(body._on_sprite_burned, CONNECT_ONE_SHOT)
+	if not body.stampable_sprite.burned.is_connected(body.on_sprite_burned):
+		body.stampable_sprite.burned.connect(body.on_sprite_burned, CONNECT_ONE_SHOT)
 
 
 func exit_state() -> void:
-	if body.stampable_sprite.burned.is_connected(body._on_sprite_burned):
-		body.stampable_sprite.burned.disconnect(body._on_sprite_burned)
+	if body.stampable_sprite.burned.is_connected(body.on_sprite_burned):
+		body.stampable_sprite.burned.disconnect(body.on_sprite_burned)

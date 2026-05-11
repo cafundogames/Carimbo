@@ -20,7 +20,7 @@ extends CharacterBody3D
 @export var state_dead: EnemyState
 @export var state_hit: EnemyState
 
-var last_direction: Vector2 = Vector2.LEFT
+var last_direction: Vector3 = Vector3.LEFT
 var _current_state: EnemyState
 
 
@@ -62,8 +62,20 @@ func change_state(new_state: EnemyState) -> void:
 	_current_state.enter_state(self)
 
 
+func on_sprite_burned() -> void:
+	# TODO: add maybe a signal (bus?) for levels to detect when an enemy died
+	queue_free()
+
+
 func _on_navigation_agent_velocity_computed(safe_velocity: Vector3) -> void:
-	velocity = safe_velocity
+	if _current_state != state_beehave:
+		return
+	velocity = Vector3(
+		safe_velocity.x,
+		velocity.y,
+		safe_velocity.z,
+	)
+	last_direction = velocity.normalized()
 
 
 func _on_health_data_dead() -> void:
@@ -73,8 +85,3 @@ func _on_health_data_dead() -> void:
 func _on_health_data_success_hit(attack_info: AttackData) -> void:
 	change_state(state_hit)
 	stampable_sprite.stamp(attack_info.stamp_texture, attack_info.stamp_size)
-
-
-func _on_sprite_burned() -> void:
-	# TODO: add maybe a signal (bus?) for levels to detect when an enemy died
-	queue_free()
