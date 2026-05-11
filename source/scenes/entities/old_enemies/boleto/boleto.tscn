@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://o34vnik8cwo4" path="res://assets/textures/paper/Paper003_1K-JPG_NormalGL.jpg" id="4_g10rj"]
 [ext_resource type="Texture2D" uid="uid://dkbujjnpxwia0" path="res://assets/textures/paper/Paper003_1K-JPG_Roughness.jpg" id="5_8gtkm"]
 [ext_resource type="Texture2D" uid="uid://ddvf2tcrr4143" path="res://assets/textures/enemies/boleto/boleto_sprite_sheet.png" id="5_uqqi4"]
-[ext_resource type="AudioStream" uid="uid://dfe4v2sdvd1bd" path="res://assets/sounds/burn1.mp3" id="8_o5jln"]
+[ext_resource type="AudioStream" uid="uid://dfe4v2sdvd1bd" path="res://assets/sounds/burn_sfx.mp3" id="8_o5jln"]
 [ext_resource type="Script" uid="uid://cqxuelwl2k4bg" path="res://scripts/attack_system/stats_component.gd" id="8_yp07s"]
 [ext_resource type="Script" uid="uid://baffaklkbk27f" path="res://scripts/attack_system/hitbox_component.gd" id="9_2a0nr"]
 [ext_resource type="AudioStream" uid="uid://b8ejg8s8ue10q" path="res://assets/sounds/paper_tear1.mp3" id="9_xnw1q"]

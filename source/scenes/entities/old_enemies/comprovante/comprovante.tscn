@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://bb0t2ovl7wifo" path="res://addons/beehave/nodes/beehave_tree.gd" id="7_6ho0j"]
 [ext_resource type="Shader" uid="uid://dl6ampid6rth6" path="res://scenes/components/stamped_animated_sprite/shaded_animated_sprite_3d.gdshader" id="7_aeb3h"]
 [ext_resource type="Texture2D" uid="uid://ch1fj0j2vc2r1" path="res://resources/burn_noise_texture.tres" id="8_6ho0j"]
-[ext_resource type="AudioStream" uid="uid://dfe4v2sdvd1bd" path="res://assets/sounds/burn1.mp3" id="8_k7nf7"]
+[ext_resource type="AudioStream" uid="uid://dfe4v2sdvd1bd" path="res://assets/sounds/burn_sfx.mp3" id="8_k7nf7"]
 [ext_resource type="Texture2D" uid="uid://o34vnik8cwo4" path="res://assets/textures/paper/Paper003_1K-JPG_NormalGL.jpg" id="9_gnod2"]
 [ext_resource type="Script" uid="uid://c15vrenp7llbg" path="res://scripts/debug/debug_label.gd" id="9_qaros"]
 [ext_resource type="AudioStream" uid="uid://b8ejg8s8ue10q" path="res://assets/sounds/paper_tear1.mp3" id="9_u6f22"]
