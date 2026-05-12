@@ -2,11 +2,15 @@
 class_name PlayAnimation
 extends ActionLeaf
 
-@export var animation_sprite: AnimatedSprite3D
+@export var animation_sprite: AnimatedSprite3D:
+	set(v):
+		animation_sprite = v
+		notify_property_list_changed()
 @export var animation_name: StringName
 @export var await_animation_finish: bool = true
 
 var _last_animation: StringName
+
 
 func _validate_property(property: Dictionary) -> void:
 	var sprite_list: PackedStringArray = (
