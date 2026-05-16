@@ -10,11 +10,9 @@ func enter_state(player_node: PlayerCharacterBody3D) -> void:
 
 
 func handle_physics_process(_delta: float) -> void:
-	if player.global_position.y <= player.death_on_y:
-		player.change_state(player.state_dead)
 	if not player.get_movement_vector().is_zero_approx():
 		player.change_state(player.state_walk)
-	if Input.is_action_pressed(&"roll"):
+	if Input.is_action_just_pressed(&"roll"):
 		player.change_state(player.state_roll)
 	if Input.is_action_pressed(&"hit"):
 		player.change_state(player.state_attack)

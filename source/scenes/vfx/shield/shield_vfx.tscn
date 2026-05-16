@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://b3secfevbfci5"]
+
+[ext_resource type="Script" uid="uid://b15egwgb0ogki" path="res://scenes/vfx/shield/shield_vfx.gd" id="1_6o07m"]
+[ext_resource type="Texture2D" uid="uid://vs5byvpt5vqc" path="res://assets/textures/vfx/escudo.png" id="1_ti1na"]
+[ext_resource type="Texture2D" uid="uid://crl1uvanniocl" path="res://assets/textures/vfx/particles/faisca.png" id="2_6o07m"]
+
+[sub_resource type="Curve" id="Curve_n1fjc"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_kdo62"]
+curve = SubResource("Curve_n1fjc")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ygh2t"]
+lifetime_randomness = 0.75
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 0.5
+emission_ring_radius = 1.5
+emission_ring_inner_radius = 1.2
+emission_ring_cone_angle = 90.0
+angle_min = -179.99998
+angle_max = 180.00002
+direction = Vector3(0, 0, 0)
+spread = 180.0
+flatness = 0.5
+initial_velocity_min = 0.5
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.19999999
+scale_max = 0.39999998
+scale_curve = SubResource("CurveTexture_kdo62")
+color = Color(0, 2.215635, 2.8024793, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pub20"]
+transparency = 1
+cull_mode = 2
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_texture = ExtResource("2_6o07m")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_3fub3"]
+material = SubResource("StandardMaterial3D_pub20")
+
+[node name="ShieldVFX" type="Node3D" unique_id=1590509605]
+script = ExtResource("1_6o07m")
+
+[node name="Sprite1" type="Sprite3D" parent="." unique_id=1600107232]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1.5)
+pixel_size = 0.0025
+texture = ExtResource("1_ti1na")
+
+[node name="Sprite2" type="Sprite3D" parent="." unique_id=424120429]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -1.5, 1, 6.556708e-08)
+pixel_size = 0.0025
+texture = ExtResource("1_ti1na")
+
+[node name="Sprite3" type="Sprite3D" parent="." unique_id=1037593659]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 1.3113416e-07, 1, 1.5)
+pixel_size = 0.0025
+texture = ExtResource("1_ti1na")
+
+[node name="Sprite4" type="Sprite3D" parent="." unique_id=1186477080]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.5, 1, -1.788732e-08)
+pixel_size = 0.0025
+texture = ExtResource("1_ti1na")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=1474914715]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
+emitting = false
+amount = 64
+one_shot = true
+explosiveness = 1.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_ygh2t")
+draw_pass_1 = SubResource("QuadMesh_3fub3")

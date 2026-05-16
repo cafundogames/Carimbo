@@ -1,0 +1,132 @@
+[gd_scene format=3 uid="uid://bmyqthncyrp7d"]
+
+[ext_resource type="PackedScene" uid="uid://gg10ryysg0r3" path="res://scenes/entities/enemies/template.tscn" id="1_v7jcc"]
+[ext_resource type="Shader" uid="uid://dl6ampid6rth6" path="res://scenes/components/stamped_animated_sprite/shaded_animated_sprite_3d.gdshader" id="2_o8p3y"]
+[ext_resource type="Texture2D" uid="uid://ch1fj0j2vc2r1" path="res://resources/burn_noise_texture.tres" id="3_hvof7"]
+[ext_resource type="Texture2D" uid="uid://cr2wujfxi5bm2" path="res://assets/textures/enemies/casamento/casamento.png" id="4_jqomk"]
+[ext_resource type="Texture2D" uid="uid://o34vnik8cwo4" path="res://assets/textures/paper/Paper003_1K-JPG_NormalGL.jpg" id="5_2qr4a"]
+[ext_resource type="Texture2D" uid="uid://dkbujjnpxwia0" path="res://assets/textures/paper/Paper003_1K-JPG_Roughness.jpg" id="6_ywtd6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k7i2i"]
+atlas = ExtResource("4_jqomk")
+region = Rect2(0, 0, 512, 512)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_r3b27"]
+viewport_path = NodePath("ShadedAnimatedSprite3D/SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2b72l"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("2_o8p3y")
+shader_parameter/roughness = 1.0
+shader_parameter/texture_roughness = ExtResource("6_ywtd6")
+shader_parameter/specular = 0.249999994412
+shader_parameter/texture_normal = ExtResource("5_2qr4a")
+shader_parameter/normal_scale = 1.5600008340999985
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = SubResource("AtlasTexture_k7i2i")
+shader_parameter/texture_carimbo = SubResource("ViewportTexture_r3b27")
+shader_parameter/carimbo_glow_intensity = 0.0
+shader_parameter/burn_texture = ExtResource("3_hvof7")
+shader_parameter/burn_amount = 0.0
+shader_parameter/burn_size = 0.150000007125
+shader_parameter/burn_smoothness = 0.1330000063175
+shader_parameter/burn_glow_color = Color(1, 0.32, 0, 1)
+shader_parameter/burn_glow_intensity = 10.0
+shader_parameter/region_rect = Vector4(0, 0, 0.33333334, 0.24987799)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rhx1o"]
+atlas = ExtResource("4_jqomk")
+region = Rect2(0, 1536, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1svfh"]
+atlas = ExtResource("4_jqomk")
+region = Rect2(0, 1024, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tcy7h"]
+atlas = ExtResource("4_jqomk")
+region = Rect2(512, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_688pf"]
+atlas = ExtResource("4_jqomk")
+region = Rect2(1024, 0, 512, 512)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hepet"]
+animations = [{
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_rhx1o")
+}],
+"loop": false,
+"name": &"death",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_1svfh")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k7i2i")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tcy7h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_688pf")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 6.0
+}]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_56c7a"]
+radius = 0.9238281
+height = 3.618164
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0gna4"]
+radius = 1.947998
+height = 3.895996
+
+[node name="Casamento" unique_id=763151606 instance=ExtResource("1_v7jcc")]
+
+[node name="NavigationAgent3D" parent="." index="0" unique_id=1884705586]
+target_desired_distance = 5.0
+
+[node name="ShieldVFX" parent="." index="1" unique_id=1590509605]
+visible = true
+shield_distance = 2.4
+
+[node name="ShadedAnimatedSprite3D" parent="." index="2" unique_id=1833710375]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.403065, 0)
+material_override = SubResource("ShaderMaterial_2b72l")
+pixel_size = 0.01
+sprite_frames = SubResource("SpriteFrames_hepet")
+frame_progress = 0.9572028
+stamp_viewport_texture = SubResource("ViewportTexture_r3b27")
+
+[node name="CollisionShape3D" parent="." index="3" unique_id=412428590]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7565918, 0)
+shape = SubResource("CapsuleShape3D_56c7a")
+
+[node name="CollisionShape3D" parent="Hurtbox3D" parent_id_path=PackedInt32Array(1490470954) index="0" unique_id=1739515420]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.734355, 0)
+shape = SubResource("CapsuleShape3D_0gna4")
+
+[node name="HealthData" parent="." index="5" unique_id=1942714982]
+initial_health = 12.0
+
+[node name="ShieldData" parent="." index="6" unique_id=659977782]
+initial_shield = 1.0
+
+[node name="BeehaveTree" parent="." index="9" unique_id=1793039313]
+enabled = false

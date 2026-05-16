@@ -15,7 +15,7 @@ func enter_state(player_node: PlayerCharacterBody3D) -> void:
 	var curr_stamp: StampData = player.current_stamp if player.current_stamp else COMMON_STAMP
 	hit_cooldown = curr_stamp.stamp_cooldown
 	_time_left = hit_cooldown
-	player.velocity = player.velocity.move_toward(Vector3.DOWN * player.velocity.y, 0.9)
+	player.velocity = Vector3.DOWN * player.velocity.y
 	player.stampable_sprite.stop()
 	var animation: StringName
 	match curr_stamp.stamp_type:
@@ -35,7 +35,6 @@ func exit_state() -> void:
 
 
 func handle_physics_process(delta: float) -> void:
-	player.velocity = player.velocity.move_toward(Vector3.DOWN * player.velocity.y, delta * 20.0)
 	if _time_left < (hit_cooldown / 2.0) and noise_emitter:
 		noise_emitter.emit()
 	if _time_left > 0.0:
@@ -43,7 +42,7 @@ func handle_physics_process(delta: float) -> void:
 	elif Input.is_action_pressed(&"hit"):
 		player.change_state(self)
 
-	if Input.is_action_pressed(&"roll"):
+	if Input.is_action_just_pressed(&"roll"):
 		player.change_state(player.state_roll)
 	if not player.stampable_sprite.is_playing():
 		player.change_state(player.state_idle)

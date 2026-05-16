@@ -12,25 +12,29 @@
 [ext_resource type="Script" uid="uid://dganhrqw3fv7u" path="res://scripts/combat/health_data.gd" id="10_0pv1n"]
 [ext_resource type="Script" uid="uid://bqiq8knpd7yk2" path="res://scripts/combat/shield_data.gd" id="11_vhq8i"]
 [ext_resource type="Script" uid="uid://cwcntjydr6hw2" path="res://scenes/entities/enemies/enemy_state_machine/states/beehave_state.gd" id="12_37d6u"]
+[ext_resource type="PackedScene" uid="uid://b3secfevbfci5" path="res://scenes/vfx/shield/shield_vfx.tscn" id="12_k7nf7"]
 [ext_resource type="Script" uid="uid://bsjqacgoagglr" path="res://scenes/entities/enemies/enemy_state_machine/states/dead_state.gd" id="13_ce2ch"]
 [ext_resource type="AudioStream" uid="uid://b8ejg8s8ue10q" path="res://assets/sounds/paper_tear.mp3" id="14_qbc74"]
 [ext_resource type="Script" uid="uid://oa7xd24pvby4" path="res://scenes/entities/enemies/enemy_state_machine/states/hit_state.gd" id="14_u6ejr"]
 [ext_resource type="Script" uid="uid://dme5f24l0edsf" path="res://addons/beehave/blackboard.gd" id="15_qbc74"]
 [ext_resource type="Script" uid="uid://bb0t2ovl7wifo" path="res://addons/beehave/nodes/beehave_tree.gd" id="16_ywc1i"]
-[ext_resource type="Script" uid="uid://cv74jjdrwevpr" path="res://addons/beehave/nodes/leaves/action.gd" id="17_22s0n"]
 [ext_resource type="Script" uid="uid://cg016dbe7gs1x" path="res://addons/beehave/nodes/composites/sequence.gd" id="17_u6ejr"]
-[ext_resource type="Script" uid="uid://8hn4kne15ac5" path="res://addons/beehave/nodes/composites/selector.gd" id="18_22s0n"]
-[ext_resource type="Script" uid="uid://dsf3a8vlolhx8" path="res://addons/beehave/nodes/decorators/succeeder.gd" id="18_qbc74"]
+[ext_resource type="Script" uid="uid://cw22yurt5l74k" path="res://addons/beehave/nodes/composites/selector_reactive.gd" id="18_3a7xy"]
 [ext_resource type="Script" uid="uid://we22430vcb44" path="res://addons/beehave/nodes/decorators/time_limiter.gd" id="19_ywc1i"]
 [ext_resource type="Script" uid="uid://dviswpb30vjsb" path="res://scripts/beehave/leaf/action/get_closest_node_in_group.gd" id="20_3iosa"]
 [ext_resource type="Script" uid="uid://dj83ff8qq3750" path="res://scripts/beehave/leaf/action/play_animation.gd" id="20_22s0n"]
 [ext_resource type="Script" uid="uid://d2xmiph6k2iwd" path="res://scripts/beehave/leaf/action/get_random_position_in_radius.gd" id="21_3iosa"]
+[ext_resource type="Script" uid="uid://bw061ltjspsfm" path="res://scripts/beehave/leaf/condition/is_target_within_distance.gd" id="21_at3s2"]
 [ext_resource type="Script" uid="uid://bclydsgx4fdv7" path="res://scripts/beehave/leaf/action/spawn_attack.gd" id="22_e6uqr"]
-[ext_resource type="Script" uid="uid://ch2sgd6m76psk" path="res://scripts/beehave/leaf/action/got_to_target_position.gd" id="22_pnnsd"]
+[ext_resource type="Script" uid="uid://ch2sgd6m76psk" path="res://scripts/beehave/leaf/action/go_to_target_position.gd" id="22_pnnsd"]
+[ext_resource type="Script" uid="uid://2qri6rrfv8ui" path="res://addons/beehave/nodes/decorators/cooldown.gd" id="22_qaros"]
+[ext_resource type="PackedScene" uid="uid://dp2vfte8rsio2" path="res://scenes/attacks/common/common_attack.tscn" id="23_e6uqr"]
+[ext_resource type="Script" uid="uid://bvrvf4ku64sqx" path="res://scripts/beehave/leaf/action/get_target_position.gd" id="26_3a7xy"]
+[ext_resource type="Script" uid="uid://crkjak4kyv56m" path="res://addons/beehave/nodes/decorators/inverter.gd" id="27_qaros"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_u6f22"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_3a7xy"]
 atlas = ExtResource("4_oqdvw")
-region = Rect2(0, 513, 510, 513)
+region = Rect2(0, 0, 510, 513)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_ryg5p"]
 viewport_path = NodePath("ShadedAnimatedSprite3D/SubViewport")
@@ -45,7 +49,7 @@ shader_parameter/specular = 0.249999994412
 shader_parameter/texture_normal = ExtResource("5_aeb3h")
 shader_parameter/normal_scale = 1.5600008340999985
 shader_parameter/albedo = Color(1, 1, 1, 1)
-shader_parameter/texture_albedo = SubResource("AtlasTexture_u6f22")
+shader_parameter/texture_albedo = SubResource("AtlasTexture_3a7xy")
 shader_parameter/texture_carimbo = SubResource("ViewportTexture_ryg5p")
 shader_parameter/carimbo_glow_intensity = 0.0
 shader_parameter/burn_texture = ExtResource("3_ryg5p")
@@ -54,7 +58,11 @@ shader_parameter/burn_size = 0.150000007125
 shader_parameter/burn_smoothness = 0.1330000063175
 shader_parameter/burn_glow_color = Color(1, 0.32, 0, 1)
 shader_parameter/burn_glow_intensity = 10.0
-shader_parameter/region_rect = Vector4(0, 0.25048828, 0.33203125, 0.25048828)
+shader_parameter/region_rect = Vector4(0, 0, 0.33203125, 0.25048828)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u6f22"]
+atlas = ExtResource("4_oqdvw")
+region = Rect2(0, 513, 510, 513)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n1fjc"]
 atlas = ExtResource("4_oqdvw")
@@ -67,10 +75,6 @@ region = Rect2(0, 1539, 510, 513)
 [sub_resource type="AtlasTexture" id="AtlasTexture_3fub3"]
 atlas = ExtResource("4_oqdvw")
 region = Rect2(0, 1026, 510, 513)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3a7xy"]
-atlas = ExtResource("4_oqdvw")
-region = Rect2(0, 0, 510, 513)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qaros"]
 atlas = ExtResource("4_oqdvw")
@@ -130,7 +134,7 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3iosa"]
-radius = 0.7104492
+radius = 0.7
 height = 1.8432617
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pnnsd"]
@@ -153,7 +157,12 @@ state_dead = NodePath("States/EnemyDeadState")
 state_hit = NodePath("States/EnemyHitState")
 metadata/_custom_type_script = "uid://bj50l06kkgkyj"
 
+[node name="ShieldVFX" parent="." unique_id=1590509605 instance=ExtResource("12_k7nf7")]
+visible = false
+
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1192072492]
+path_desired_distance = 2.0
+target_desired_distance = 2.0
 avoidance_enabled = true
 radius = 1.0
 debug_enabled = true
@@ -164,7 +173,8 @@ material_override = SubResource("ShaderMaterial_2pmjq")
 pixel_size = 0.005
 billboard = 1
 sprite_frames = SubResource("SpriteFrames_tomxg")
-animation = &"attack"
+animation = &"idle"
+frame_progress = 0.6261329
 script = ExtResource("7_gnod2")
 audio_player = NodePath("BurnSfx")
 stamp_viewport = NodePath("SubViewport")
@@ -185,11 +195,12 @@ render_target_update_mode = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.92163086, 0)
 shape = SubResource("CapsuleShape3D_3iosa")
 
-[node name="Hurtbox3D" type="Area3D" parent="." unique_id=863551770]
+[node name="Hurtbox3D" type="Area3D" parent="." unique_id=863551770 node_paths=PackedStringArray("actor")]
 collision_layer = 0
 collision_mask = 24
 monitorable = false
 script = ExtResource("9_ggkcr")
+actor = NodePath("..")
 metadata/_custom_type_script = "uid://bmgcj6fweob2m"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox3D" unique_id=1251845286]
@@ -200,7 +211,7 @@ shape = SubResource("CapsuleShape3D_pnnsd")
 script = ExtResource("10_0pv1n")
 metadata/_custom_type_script = "uid://dganhrqw3fv7u"
 
-[node name="ShieldData" type="Node" parent="." unique_id=1788284360]
+[node name="ShieldData" type="Node" parent="." unique_id=376605907]
 script = ExtResource("11_vhq8i")
 metadata/_custom_type_script = "uid://bqiq8knpd7yk2"
 
@@ -230,107 +241,125 @@ metadata/_custom_type_script = "uid://dme5f24l0edsf"
 
 [node name="BeehaveTree" type="Node" parent="." unique_id=1817807128 node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("16_ywc1i")
-enabled = false
 actor_node_path = NodePath("..")
 blackboard = NodePath("../Blackboard")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://bb0t2ovl7wifo"
 
-[node name="SelectorComposite" type="Node" parent="BeehaveTree" unique_id=301650871]
-script = ExtResource("18_22s0n")
-metadata/_custom_type_script = "uid://8hn4kne15ac5"
+[node name="Main" type="Node" parent="BeehaveTree" unique_id=606750691]
+script = ExtResource("18_3a7xy")
+metadata/_custom_type_script = "uid://cw22yurt5l74k"
 
-[node name="Combat" type="Node" parent="BeehaveTree/SelectorComposite" unique_id=1461824393]
+[node name="Combat" type="Node" parent="BeehaveTree/Main" unique_id=1461824393]
 script = ExtResource("17_u6ejr")
 metadata/_custom_type_script = "uid://cg016dbe7gs1x"
 
-[node name="GetClosestNodeInGroup" type="Node" parent="BeehaveTree/SelectorComposite/Combat" unique_id=1678892698]
+[node name="GetPlayer" type="Node" parent="BeehaveTree/Main/Combat" unique_id=1678892698]
 script = ExtResource("20_3iosa")
 blackboard_key = &"player_node"
 node_group_name = "player"
 max_scan_range = 10.0
 metadata/_custom_type_script = "uid://dviswpb30vjsb"
 
-[node name="InRange" type="Node" parent="BeehaveTree/SelectorComposite/Combat" unique_id=321852970]
-script = ExtResource("18_22s0n")
-metadata/_custom_type_script = "uid://8hn4kne15ac5"
+[node name="GetPlayerPosition" type="Node" parent="BeehaveTree/Main/Combat" unique_id=419343871]
+script = ExtResource("26_3a7xy")
+target_node_key = &"player_node"
+target_position_key = &"player_position"
+metadata/_custom_type_script = "uid://bvrvf4ku64sqx"
 
-[node name="Attack" type="Node" parent="BeehaveTree/SelectorComposite/Combat/InRange" unique_id=524892023]
+[node name="PlayerFound" type="Node" parent="BeehaveTree/Main/Combat" unique_id=979646866]
+script = ExtResource("18_3a7xy")
+metadata/_custom_type_script = "uid://cw22yurt5l74k"
+
+[node name="CooldownDecorator" type="Node" parent="BeehaveTree/Main/Combat/PlayerFound" unique_id=523565244]
+script = ExtResource("22_qaros")
+wait_time = 0.8
+metadata/_custom_type_script = "uid://2qri6rrfv8ui"
+
+[node name="Attack" type="Node" parent="BeehaveTree/Main/Combat/PlayerFound/CooldownDecorator" unique_id=524892023]
 script = ExtResource("17_u6ejr")
 metadata/_custom_type_script = "uid://cg016dbe7gs1x"
 
-[node name="PlayAttackAnimation" type="Node" parent="BeehaveTree/SelectorComposite/Combat/InRange/Attack" unique_id=1921218268 node_paths=PackedStringArray("animation_sprite")]
+[node name="IsPlayerWithin" type="Node" parent="BeehaveTree/Main/Combat/PlayerFound/CooldownDecorator/Attack" unique_id=1050062388]
+script = ExtResource("21_at3s2")
+blackboard_key = &"player_node"
+metadata/_custom_type_script = "uid://bw061ltjspsfm"
+
+[node name="PlayAttackAnimation" type="Node" parent="BeehaveTree/Main/Combat/PlayerFound/CooldownDecorator/Attack" unique_id=1921218268 node_paths=PackedStringArray("animation_sprite")]
 script = ExtResource("20_22s0n")
-animation_sprite = NodePath("../../../../../../ShadedAnimatedSprite3D")
+animation_sprite = NodePath("../../../../../../../ShadedAnimatedSprite3D")
 animation_name = &"attack"
 metadata/_custom_type_script = "uid://dj83ff8qq3750"
 
-[node name="SpawnAttack" type="Node" parent="BeehaveTree/SelectorComposite/Combat/InRange/Attack" unique_id=1242227817]
+[node name="SpawnAttack" type="Node" parent="BeehaveTree/Main/Combat/PlayerFound/CooldownDecorator/Attack" unique_id=1242227817]
 script = ExtResource("22_e6uqr")
+attack_scene = ExtResource("23_e6uqr")
+target_position_key = &"player_position"
+at_target_position = false
+forward_offset = 2.0
 metadata/_custom_type_script = "uid://bclydsgx4fdv7"
 
-[node name="GoToTarget" type="Node" parent="BeehaveTree/SelectorComposite/Combat/InRange" unique_id=1658537805]
+[node name="GoToTarget" type="Node" parent="BeehaveTree/Main/Combat/PlayerFound" unique_id=1658537805]
 script = ExtResource("17_u6ejr")
 metadata/_custom_type_script = "uid://cg016dbe7gs1x"
 
-[node name="GetTargetPosition" type="Node" parent="BeehaveTree/SelectorComposite/Combat/InRange/GoToTarget" unique_id=1544668659]
-script = ExtResource("17_22s0n")
-metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+[node name="InverterDecorator" type="Node" parent="BeehaveTree/Main/Combat/PlayerFound/GoToTarget" unique_id=1890131107]
+script = ExtResource("27_qaros")
+metadata/_custom_type_script = "uid://crkjak4kyv56m"
 
-[node name="PlayWalkAnimation" type="Node" parent="BeehaveTree/SelectorComposite/Combat/InRange/GoToTarget" unique_id=1621374384 node_paths=PackedStringArray("animation_sprite")]
+[node name="IsPlayerWithin" type="Node" parent="BeehaveTree/Main/Combat/PlayerFound/GoToTarget/InverterDecorator" unique_id=124895562]
+script = ExtResource("21_at3s2")
+blackboard_key = &"player_node"
+metadata/_custom_type_script = "uid://bw061ltjspsfm"
+
+[node name="PlayWalkAnimation" type="Node" parent="BeehaveTree/Main/Combat/PlayerFound/GoToTarget" unique_id=1621374384 node_paths=PackedStringArray("animation_sprite")]
 script = ExtResource("20_22s0n")
 animation_sprite = NodePath("../../../../../../ShadedAnimatedSprite3D")
 animation_name = &"walk"
 await_animation_finish = false
 metadata/_custom_type_script = "uid://dj83ff8qq3750"
 
-[node name="TimeLimiterDecorator" type="Node" parent="BeehaveTree/SelectorComposite/Combat/InRange/GoToTarget" unique_id=205803939]
-script = ExtResource("19_ywc1i")
-metadata/_custom_type_script = "uid://we22430vcb44"
-
-[node name="GotToTargetPosition" type="Node" parent="BeehaveTree/SelectorComposite/Combat/InRange/GoToTarget/TimeLimiterDecorator" unique_id=1341753010 node_paths=PackedStringArray("navigation_agent")]
+[node name="GoToPlayer" type="Node" parent="BeehaveTree/Main/Combat/PlayerFound/GoToTarget" unique_id=1341753010 node_paths=PackedStringArray("navigation_agent")]
 script = ExtResource("22_pnnsd")
-navigation_agent = NodePath("../../../../../../../NavigationAgent3D")
-target_position_key = "player_position"
+navigation_agent = NodePath("../../../../../../NavigationAgent3D")
+target_position_key = &"player_position"
 metadata/_custom_type_script = "uid://ch2sgd6m76psk"
 
-[node name="Wander" type="Node" parent="BeehaveTree/SelectorComposite" unique_id=278413465]
+[node name="PlayIdleAnimation" type="Node" parent="BeehaveTree/Main/Combat/PlayerFound" unique_id=1230703600 node_paths=PackedStringArray("animation_sprite")]
+script = ExtResource("20_22s0n")
+animation_sprite = NodePath("../../../../../ShadedAnimatedSprite3D")
+animation_name = &"idle"
+max_loops = 9
+metadata/_custom_type_script = "uid://dj83ff8qq3750"
+
+[node name="Wander" type="Node" parent="BeehaveTree/Main" unique_id=278413465]
 script = ExtResource("17_u6ejr")
 metadata/_custom_type_script = "uid://cg016dbe7gs1x"
 
-[node name="AlwaysSucceedDecorator" type="Node" parent="BeehaveTree/SelectorComposite/Wander" unique_id=274707818]
-script = ExtResource("18_qbc74")
-metadata/_custom_type_script = "uid://dsf3a8vlolhx8"
-
-[node name="TimeLimiterDecorator" type="Node" parent="BeehaveTree/SelectorComposite/Wander/AlwaysSucceedDecorator" unique_id=31335337]
-script = ExtResource("19_ywc1i")
-wait_time = 3.0
-metadata/_custom_type_script = "uid://we22430vcb44"
-
-[node name="PlayIdleAnimation" type="Node" parent="BeehaveTree/SelectorComposite/Wander/AlwaysSucceedDecorator/TimeLimiterDecorator" unique_id=981537068 node_paths=PackedStringArray("animation_sprite")]
+[node name="PlayIdleAnimation" type="Node" parent="BeehaveTree/Main/Wander" unique_id=981537068 node_paths=PackedStringArray("animation_sprite")]
 script = ExtResource("20_22s0n")
-animation_sprite = NodePath("../../../../../../ShadedAnimatedSprite3D")
+animation_sprite = NodePath("../../../../ShadedAnimatedSprite3D")
 animation_name = &"idle"
+max_loops = 9
 metadata/_custom_type_script = "uid://dj83ff8qq3750"
 
-[node name="GetRandomPosition" type="Node" parent="BeehaveTree/SelectorComposite/Wander" unique_id=616758880]
+[node name="GetRandomPosition" type="Node" parent="BeehaveTree/Main/Wander" unique_id=616758880]
 script = ExtResource("21_3iosa")
-max_radius = null
 metadata/_custom_type_script = "uid://d2xmiph6k2iwd"
 
-[node name="PlayWalkAnimation" type="Node" parent="BeehaveTree/SelectorComposite/Wander" unique_id=1969175146 node_paths=PackedStringArray("animation_sprite")]
+[node name="PlayWalkAnimation" type="Node" parent="BeehaveTree/Main/Wander" unique_id=1969175146 node_paths=PackedStringArray("animation_sprite")]
 script = ExtResource("20_22s0n")
 animation_sprite = NodePath("../../../../ShadedAnimatedSprite3D")
 animation_name = &"walk"
 await_animation_finish = false
 metadata/_custom_type_script = "uid://dj83ff8qq3750"
 
-[node name="TimeLimiterDecorator" type="Node" parent="BeehaveTree/SelectorComposite/Wander" unique_id=622433550]
+[node name="TimeLimiterDecorator" type="Node" parent="BeehaveTree/Main/Wander" unique_id=622433550]
 script = ExtResource("19_ywc1i")
 wait_time = 10.0
 metadata/_custom_type_script = "uid://we22430vcb44"
 
-[node name="GotToTargetPosition" type="Node" parent="BeehaveTree/SelectorComposite/Wander/TimeLimiterDecorator" unique_id=59268739 node_paths=PackedStringArray("navigation_agent")]
+[node name="GoWander" type="Node" parent="BeehaveTree/Main/Wander/TimeLimiterDecorator" unique_id=59268739 node_paths=PackedStringArray("navigation_agent")]
 script = ExtResource("22_pnnsd")
 navigation_agent = NodePath("../../../../../NavigationAgent3D")
 metadata/_custom_type_script = "uid://ch2sgd6m76psk"
@@ -340,4 +369,6 @@ metadata/_custom_type_script = "uid://ch2sgd6m76psk"
 [connection signal="success_hit" from="Hurtbox3D" to="ShieldData" method="_on_hurtbox_success_hit"]
 [connection signal="dead" from="HealthData" to="." method="_on_health_data_dead"]
 [connection signal="success_hit" from="HealthData" to="." method="_on_health_data_success_hit"]
+[connection signal="healed" from="ShieldData" to="ShieldVFX" method="on_healed" flags=18]
+[connection signal="hit" from="ShieldData" to="ShieldVFX" method="on_hit" flags=18]
 [connection signal="success_hit" from="ShieldData" to="HealthData" method="on_success_hit"]

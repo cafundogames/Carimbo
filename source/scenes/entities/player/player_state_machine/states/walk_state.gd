@@ -8,8 +8,6 @@ func enter_state(player_node: PlayerCharacterBody3D) -> void:
 
 
 func handle_physics_process(_delta: float) -> void:
-	if player.global_position.y <= player.death_on_y:
-		player.change_state(player.state_dead)
 	var direction: Vector2 = player.get_movement_vector()
 	if direction.is_zero_approx():
 		player.change_state(player.state_idle)
@@ -21,7 +19,7 @@ func handle_physics_process(_delta: float) -> void:
 			player.velocity.y,
 			direction.y,
 		)
-	if Input.is_action_pressed(&"roll"):
+	if Input.is_action_just_pressed(&"roll"):
 		player.change_state(player.state_roll)
 	if Input.is_action_pressed(&"hit"):
 		player.change_state(player.state_attack)

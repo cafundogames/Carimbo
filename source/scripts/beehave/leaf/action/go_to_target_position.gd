@@ -1,9 +1,9 @@
 @tool
-class_name GotToTargetPosition
+class_name GoToTargetPosition
 extends ActionLeaf
 
 @export var navigation_agent: NavigationAgent3D
-@export var target_position_key: String = "target_position"
+@export var target_position_key: StringName = "target_position"
 
 
 func tick(actor: Node, blackboard: Blackboard) -> int:
@@ -14,7 +14,7 @@ func tick(actor: Node, blackboard: Blackboard) -> int:
 		actor_id,
 	)
 
-	assert(actor is EnemyCharacterBody3D, "[code]actor[/code] must extend EnemyCharacterBody3D")
+	assert(actor is CharacterBody3D, "[code]actor[/code] must extend CharacterBody3D")
 	var body: EnemyCharacterBody3D = actor
 	if not body.is_on_floor():
 		body.velocity = Vector3(0.0, body.velocity.y, 0.0)
@@ -38,3 +38,17 @@ func tick(actor: Node, blackboard: Blackboard) -> int:
 	else:
 		body.velocity = velocity
 	return RUNNING
+
+
+func interrupt(actor: Node, _blackboard: Blackboard) -> void:
+	if not navigation_agent:
+		return
+	navigation_agent.target_position = (actor as Node3D).global_position
+	navigation_agent.get_next_path_position()
+	assert(actor is CharacterBody3D, "[code]actor[/code] must extend CharacterBody3D")
+	var body: CharacterBody3D = actor
+	var new_velocity = Vector3(0.0, body.velocity.y, 0.0)
+	if navigation_agent.avoidance_enabled:
+		navigation_agent.set_velocity(new_velocity)
+	else:
+		body.velocity = new_velocity

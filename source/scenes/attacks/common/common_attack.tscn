@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://dp2vfte8rsio2"]
+
+[ext_resource type="Script" uid="uid://bjlq2xvqt2e3x" path="res://scripts/combat/area/hitbox_3d.gd" id="1_wrt86"]
+[ext_resource type="Script" uid="uid://cb5dev147bfak" path="res://scripts/combat/modifiers/modifier.gd" id="2_qh5jm"]
+[ext_resource type="Script" uid="uid://doxdnpadw7ldp" path="res://scripts/combat/attack_data.gd" id="3_ux17m"]
+[ext_resource type="Texture2D" uid="uid://b7sn7n1cx40ju" path="res://assets/textures/stamps/common_stamp.svg" id="4_ux17m"]
+[ext_resource type="Texture2D" uid="uid://db11mohofq7po" path="res://assets/textures/vfx/particles/puff.png" id="5_tdk4p"]
+
+[sub_resource type="Resource" id="Resource_tdk4p"]
+script = ExtResource("3_ux17m")
+stamp_texture = ExtResource("4_ux17m")
+attack_dmg = 1.0
+metadata/_custom_type_script = "uid://doxdnpadw7ldp"
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_wrt86"]
+height = 1.0
+radius = 1.0
+
+[sub_resource type="Curve" id="Curve_rrlel"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_8ed3d"]
+curve = SubResource("Curve_rrlel")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_d26yc"]
+lifetime_randomness = 1.0
+angle_min = -179.99998
+angle_max = 180.00002
+spread = 180.0
+flatness = 0.9
+initial_velocity_min = 0.59999996
+initial_velocity_max = 1.1999999
+angular_velocity_min = -150.00002
+angular_velocity_max = 149.99998
+gravity = Vector3(0, 0, 0)
+damping_max = 0.15
+scale_min = 0.5
+scale_max = 0.79999995
+scale_curve = SubResource("CurveTexture_8ed3d")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nurvn"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_texture = ExtResource("5_tdk4p")
+albedo_texture_force_srgb = true
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_fcdna"]
+material = SubResource("StandardMaterial3D_nurvn")
+
+[node name="CommonAttack" type="Area3D" unique_id=153951940]
+collision_layer = 32
+collision_mask = 0
+script = ExtResource("1_wrt86")
+attack_info = SubResource("Resource_tdk4p")
+metadata/_custom_type_script = "uid://bjlq2xvqt2e3x"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=194462903]
+shape = SubResource("CylinderShape3D_wrt86")
+
+[node name="Puff" type="GPUParticles3D" parent="." unique_id=2134799546]
+emitting = false
+amount = 64
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_d26yc")
+draw_pass_1 = SubResource("QuadMesh_fcdna")
+
+[connection signal="finished" from="Puff" to="." method="queue_free"]
+[connection signal="ready" from="Puff" to="Puff" method="set_emitting" binds= [true]]

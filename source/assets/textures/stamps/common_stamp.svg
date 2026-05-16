@@ -1,0 +1,6 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="common_stamp">
+<rect x="4" y="4" width="248" height="248" rx="124" stroke="#3B3B3B" stroke-width="8"/>
+<path id="sigil" d="M128 168C150.091 168 168 150.091 168 128C168 105.909 150.091 88 128 88M128 168C105.909 168 88 150.091 88 128C88 105.909 105.909 88 128 88M128 168V252M128 88V4M170 128H86M218 128C218 177.706 177.706 218 128 218C78.2944 218 38 177.706 38 128C38 78.2944 78.2944 38 128 38C177.706 38 218 78.2944 218 128Z" stroke="#3B3B3B" stroke-width="8" stroke-linejoin="round"/>
+</g>
+</svg>

@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://brjywgrxh3cqy"]
+
+[ext_resource type="Script" uid="uid://bjlq2xvqt2e3x" path="res://scripts/combat/area/hitbox_3d.gd" id="1_ywknv"]
+[ext_resource type="Texture2D" uid="uid://ddvf2tcrr4143" path="res://assets/textures/enemies/boleto/boleto_sprite_sheet.png" id="2_geio6"]
+[ext_resource type="Script" uid="uid://cb5dev147bfak" path="res://scripts/combat/modifiers/modifier.gd" id="2_qu067"]
+[ext_resource type="Script" uid="uid://doxdnpadw7ldp" path="res://scripts/combat/attack_data.gd" id="3_gftho"]
+[ext_resource type="Texture2D" uid="uid://b7sn7n1cx40ju" path="res://assets/textures/stamps/common_stamp.svg" id="4_8mfrh"]
+
+[sub_resource type="Resource" id="Resource_pku47"]
+script = ExtResource("3_gftho")
+stamp_texture = ExtResource("4_8mfrh")
+attack_dmg = 1.0
+metadata/_custom_type_script = "uid://doxdnpadw7ldp"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_57s06"]
+atlas = ExtResource("2_geio6")
+region = Rect2(0, 2560, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_siwbb"]
+atlas = ExtResource("2_geio6")
+region = Rect2(512, 2560, 512, 512)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ww5fh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_57s06")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_siwbb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_geio6"]
+radius = 0.800185
+
+[node name="Coin" type="Area3D" unique_id=1532082709]
+collision_layer = 32
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_ywknv")
+attack_info = SubResource("Resource_pku47")
+is_projectile = true
+speed = 8.0
+metadata/_custom_type_script = "uid://bjlq2xvqt2e3x"
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=461006258]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 1, 0)
+sorting_offset = 1.0
+pixel_size = 0.005
+axis = 1
+sprite_frames = SubResource("SpriteFrames_ww5fh")
+autoplay = "default"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1896520815]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.595371, 0)
+shape = SubResource("SphereShape3D_geio6")

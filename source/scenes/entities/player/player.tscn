@@ -18,7 +18,6 @@
 [ext_resource type="AudioStream" uid="uid://dfe4v2sdvd1bd" path="res://assets/sounds/burn_sfx.mp3" id="14_7nfft"]
 [ext_resource type="Script" uid="uid://bmgcj6fweob2m" path="res://scripts/combat/area/hurtbox_3d.gd" id="15_70kwc"]
 [ext_resource type="Script" uid="uid://dganhrqw3fv7u" path="res://scripts/combat/health_data.gd" id="16_pcd0u"]
-[ext_resource type="Script" uid="uid://bqiq8knpd7yk2" path="res://scripts/combat/shield_data.gd" id="17_w3p2j"]
 [ext_resource type="Script" uid="uid://bs3p43e2utth0" path="res://scenes/entities/player/player_state_machine/states/idle_state.gd" id="19_knby6"]
 [ext_resource type="Script" uid="uid://dfflnbbsvj0jc" path="res://scenes/entities/player/player_state_machine/states/walk_state.gd" id="20_18p7g"]
 [ext_resource type="Script" uid="uid://c8ukgaej5g33g" path="res://scenes/entities/player/player_state_machine/states/dead_state.gd" id="21_fg2wu"]
@@ -565,7 +564,7 @@ rotational_multiplier_y = 0.5
 rotational_multiplier_z = 0.5
 metadata/_custom_type_script = "uid://cuffvge5ad4aa"
 
-[node name="Player" type="CharacterBody3D" unique_id=237217294 node_paths=PackedStringArray("stampable_sprite", "state_idle", "state_walk", "state_dead", "state_roll", "state_hit", "state_attack")]
+[node name="Player" type="CharacterBody3D" unique_id=237217294 node_paths=PackedStringArray("stampable_sprite", "state_idle", "state_walk", "state_dead", "state_roll", "state_hit", "state_attack") groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_w3p2j")
 stampable_sprite = NodePath("ShadedAnimatedSprite3D")
@@ -630,10 +629,6 @@ script = ExtResource("16_pcd0u")
 initial_health = 10.0
 metadata/_custom_type_script = "uid://dganhrqw3fv7u"
 
-[node name="ShieldData" type="Node" parent="." unique_id=1861260174]
-script = ExtResource("17_w3p2j")
-metadata/_custom_type_script = "uid://bqiq8knpd7yk2"
-
 [node name="States" type="Node" parent="." unique_id=347798070]
 
 [node name="PlayerIdleState" type="Node" parent="States" unique_id=827382039]
@@ -690,8 +685,7 @@ stream = ExtResource("27_6u2ft")
 [node name="PlayerInterface" parent="." unique_id=1667225147 instance=ExtResource("25_yk2xr")]
 
 [connection signal="burned" from="ShadedAnimatedSprite3D" to="." method="_on_animated_sprite_burned"]
-[connection signal="success_hit" from="Hurtbox3D" to="ShieldData" method="_on_hurtbox_success_hit"]
+[connection signal="success_hit" from="Hurtbox3D" to="HealthData" method="on_success_hit"]
 [connection signal="dead" from="HealthData" to="." method="_on_health_data_dead"]
 [connection signal="success_heal" from="HealthData" to="." method="_on_health_data_success_heal"]
 [connection signal="success_hit" from="HealthData" to="." method="_on_health_data_success_hit"]
-[connection signal="success_hit" from="ShieldData" to="HealthData" method="on_success_hit"]

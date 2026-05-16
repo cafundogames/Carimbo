@@ -34,8 +34,6 @@ func exit_state() -> void:
 
 
 func handle_physics_process(delta: float) -> void:
-	if player.global_position.y <= player.death_on_y:
-		player.change_state(player.state_dead)
 	if _stun_time > 0.0:
 		_stun_time -= delta
 		return

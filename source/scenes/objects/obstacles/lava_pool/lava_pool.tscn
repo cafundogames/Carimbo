@@ -85,6 +85,8 @@ size = Vector2(8, 8)
 lava_mesh = NodePath("LavaMesh")
 hitbox_collision = NodePath("HitboxCollision")
 attack_info = SubResource("Resource_2dxmu")
+is_projectile = null
+speed = null
 metadata/_custom_type_script = "uid://c3ok7vgj5rs6i"
 
 [node name="LavaMesh" type="MeshInstance3D" parent="." unique_id=745742438]

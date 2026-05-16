@@ -30,8 +30,6 @@ func exit_state() -> void:
 
 
 func handle_physics_process(delta: float) -> void:
-	if player.global_position.y <= player.death_on_y:
-		player.change_state(player.state_dead)
 	if Input.is_action_just_pressed(&"hit"):
 		player.change_state(player.state_attack)
 	_time_left -= delta

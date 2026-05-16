@@ -8,6 +8,16 @@ extends Hitbox3D
 @export var hitbox_collision: CollisionShape3D
 
 
+func _ready() -> void:
+	monitorable = true
+	monitoring = false
+
+
+func _validate_property(property: Dictionary) -> void:
+	if property.name == "lifetime":
+		property.usage = PROPERTY_USAGE_NONE
+
+
 func set_size(new: Vector2) -> void:
 	size = new.max(Vector2.ONE)
 	if not lava_mesh or not hitbox_collision:

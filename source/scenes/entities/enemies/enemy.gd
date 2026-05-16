@@ -31,13 +31,15 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if Engine.is_editor_hint():
+	if Engine.is_editor_hint() or _current_state == state_dead:
 		return
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	move_and_slide()
 	if not is_zero_approx(last_direction.x) and stampable_sprite:
 		stampable_sprite.set_flip_h(last_direction.x > 0)
+	if global_position.y < death_on_y:
+		change_state(state_dead)
 
 
 func _validate_property(property: Dictionary) -> void:
@@ -75,7 +77,8 @@ func _on_navigation_agent_velocity_computed(safe_velocity: Vector3) -> void:
 		velocity.y,
 		safe_velocity.z,
 	)
-	last_direction = velocity.normalized()
+	if not velocity.is_zero_approx():
+		last_direction = velocity.normalized()
 
 
 func _on_health_data_dead() -> void:

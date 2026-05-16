@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://d0spimccpwtax" path="res://scripts/combat/stamp_data.gd" id="1_besiy"]
 [ext_resource type="Texture2D" uid="uid://c8s207urk8aid" path="res://assets/textures/ui/vida/vermelho_bola.png" id="2_ibnk8"]
-[ext_resource type="PackedScene" uid="uid://dw4l3rqouqlum" path="res://scenes/attacks/stamps/fire_stamp.tscn" id="2_vyywh"]
+[ext_resource type="PackedScene" uid="uid://t3o7egwwp8o0" path="res://scenes/attacks/stamps/common_stamp.tscn" id="2_vyywh"]
 [ext_resource type="Texture2D" uid="uid://cpcqposnr265t" path="res://assets/textures/ui/vida/vermelha_bola_grande.png" id="3_vyywh"]
 
 [resource]

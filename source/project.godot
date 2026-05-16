@@ -71,10 +71,10 @@ folder_colors={
 
 [global_group]
 
-player="The group to grab the player node"
 monster=""
 camera=""
 document="The enemies"
+player="The group to grab the player node"
 
 [input]
 
