@@ -19,9 +19,9 @@ func enter_state(player_node: PlayerCharacterBody3D) -> void:
 	player.stampable_sprite.stop()
 	var animation: StringName
 	match curr_stamp.stamp_type:
-		curr_stamp.StampAttackType.MELEE:
+		StampData.ATTACK_MELEE:
 			animation = player.animation_attk
-		curr_stamp.StampAttackType.RANGED:
+		StampData.ATTACK_RANGED:
 			animation = player.animation_fire
 	player.stampable_sprite.play(animation)
 	_spawn_stamp(curr_stamp.stamp_scene)

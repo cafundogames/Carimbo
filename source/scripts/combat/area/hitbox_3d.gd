@@ -16,6 +16,7 @@ var velocity: Vector3
 func _ready() -> void:
 	monitorable = true
 	monitoring = false
+	if Engine.is_editor_hint(): return
 	get_tree().create_timer(lifetime).timeout.connect(self.queue_free)
 
 

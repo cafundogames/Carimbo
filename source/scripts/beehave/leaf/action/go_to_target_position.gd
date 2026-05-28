@@ -14,18 +14,18 @@ func tick(actor: Node, blackboard: Blackboard) -> int:
 		actor_id,
 	)
 
-	assert(actor is CharacterBody3D, "[code]actor[/code] must extend CharacterBody3D")
+	assert(actor is EnemyCharacterBody3D, "[code]actor[/code] must extend EnemyCharacterBody3D")
 	var body: EnemyCharacterBody3D = actor
 	if not body.is_on_floor():
 		body.velocity = Vector3(0.0, body.velocity.y, 0.0)
 		return FAILURE
 
-	assert(navigation_agent != null, "NavigationAgent3D must not be null!")
-	navigation_agent.target_position = cached_position
-	var next_path_position = navigation_agent.get_next_path_position()
-
-	if navigation_agent.is_navigation_finished():
-		return SUCCESS
+	var next_path_position: Vector3 = cached_position
+	if navigation_agent:
+		navigation_agent.target_position = cached_position
+		next_path_position = navigation_agent.get_next_path_position()
+		if navigation_agent.is_navigation_finished():
+			return SUCCESS
 
 	var new_velocity = body.global_position.direction_to(next_path_position) * body.movement_speed
 	var velocity = Vector3(
@@ -33,22 +33,23 @@ func tick(actor: Node, blackboard: Blackboard) -> int:
 		body.velocity.y,
 		new_velocity.z,
 	)
-	if navigation_agent.avoidance_enabled:
+	if navigation_agent and navigation_agent.avoidance_enabled:
 		navigation_agent.set_velocity(velocity)
 	else:
-		body.velocity = velocity
+		body.set_velocity(velocity)
 	return RUNNING
 
 
 func interrupt(actor: Node, _blackboard: Blackboard) -> void:
-	if not navigation_agent:
-		return
-	navigation_agent.target_position = (actor as Node3D).global_position
-	navigation_agent.get_next_path_position()
+	if navigation_agent:
+		navigation_agent.target_position = (actor as Node3D).global_position
+		# needed to update some of navigation_agent's internal state
+		navigation_agent.get_next_path_position()
+
 	assert(actor is CharacterBody3D, "[code]actor[/code] must extend CharacterBody3D")
 	var body: CharacterBody3D = actor
-	var new_velocity = Vector3(0.0, body.velocity.y, 0.0)
-	if navigation_agent.avoidance_enabled:
-		navigation_agent.set_velocity(new_velocity)
+	var velocity = Vector3(0.0, body.velocity.y, 0.0)
+	if navigation_agent and navigation_agent.avoidance_enabled:
+		navigation_agent.set_velocity(velocity)
 	else:
-		body.velocity = new_velocity
+		body.set_velocity(velocity)

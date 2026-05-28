@@ -11,7 +11,7 @@ extends ActionLeaf
 	set(v):
 		await_animation_finish = v
 		notify_property_list_changed()
-@export var max_loops: int = 1
+@export_range(0, 10, 1, "or_greater") var max_loops: int = 1
 
 var _last_animation: StringName
 var _loops: int = 0
@@ -38,7 +38,7 @@ func _validate_property(property: Dictionary) -> void:
 
 func tick(_actor: Node, _blackboard: Blackboard) -> int:
 	var response: int = RUNNING if await_animation_finish else SUCCESS
-	if animation_sprite.get_animation() == animation_name:
+	if response == RUNNING and animation_sprite.get_animation() == animation_name:
 		if animation_sprite.is_playing() and _loops < max_loops:
 			_current_running = true
 			response = RUNNING
